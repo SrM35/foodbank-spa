@@ -8,7 +8,7 @@ export default async function HomeView() {
   const items = await service.getAll();
 
   return `
-    <h2>Elementos disponibles</h2>
+    <h2>Productos disponibles</h2>
     <div class="grid">
       ${items.map((item) => ItemCard(item)).join("")}
     </div>

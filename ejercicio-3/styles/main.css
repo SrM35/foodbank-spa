@@ -5,18 +5,18 @@
 body {
   font-family: system-ui, sans-serif;
   margin: 0;
-  color: #1e2761;
-  background: #f7f8fb;
+  color: #1F2937;
+  background: #F3F4F6;
 }
 
 header {
-  background: #1e2761;
-  color: white;
+  background: #108a11;
+  color: #FFFFFF;
   padding: 1rem 2rem;
 }
 
 nav a {
-  color: #cadcfc;
+  color: #FFFFFF;
   margin-right: 1.2rem;
   text-decoration: none;
   font-weight: 600;
@@ -51,6 +51,6 @@ footer {
 }
 
 .card a {
-  color: #1e2761;
+  color: #004B24;
   font-weight: 600;
 }

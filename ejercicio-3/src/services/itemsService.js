@@ -14,29 +14,35 @@
 
 const ITEMS = [
   {
-    id: "1",
-    title: "Elemento de ejemplo uno",
-    description: "Descripción corta del primer elemento de tu catálogo.",
-    meta: "Dato extra (ej. duración, precio, categoría...)",
+    id:"1",
+    title:"Arroz",
+    description:"Arroz blanco para la alimentación.",
+    meta:"Categoria: Granos",
   },
   {
-    id: "2",
-    title: "Elemento de ejemplo dos",
-    description: "Descripción corta del segundo elemento de tu catálogo.",
-    meta: "Dato extra",
+    id:"2",
+    title:"Frijol",
+    description:"Frijol peruano para preparar diferentes comidas.",
+    meta:"Categoria: Legumbres",
   },
   {
-    id: "3",
-    title: "Elemento de ejemplo tres",
-    description: "Descripción corta del tercer elemento de tu catálogo.",
-    meta: "Dato extra",
+    id:"3",
+    title:"Atun enlatado",
+    description:"Atun enlatado como fuente de proteina de facil preparacion.",
+    meta:"Categoria: Enlatados",
   },
   {
-    id: "4",
-    title: "Elemento de ejemplo cuatro",
-    description: "Descripción corta del cuarto elemento de tu catálogo.",
-    meta: "Dato extra",
+    id:"4",
+    title:"Pan bimbo",
+    description:"Pan de caja para preparar sandwiches y acompañar comidas.",
+    meta:"Categoria: Lacteos",
   },
+  {
+    id:"5",
+    title:"Gelatina",
+    description:"Gelatina para postres.",
+    meta:"Categoria: Postres",
+  }
 ];
 
 export default class ItemsService {

@@ -4,8 +4,7 @@ export default function AboutView() {
   return `
     <div class="card">
       <h2>Acerca de este catálogo</h2>
-      <p>Mini-SPA de ejercicio: organización modular + enrutamiento de
-      cliente con la History API, aplicado a [tu tema aquí].</p>
+      <p>Food bank es un sitio web que te permite encontrar los alimentos que necesites.</p>
     </div>
   `;
 }

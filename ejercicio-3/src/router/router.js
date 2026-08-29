@@ -5,6 +5,9 @@
  * TODO (Ejercicio - Parte A, punto 1): agrega soporte para rutas con
  * parámetros, como "/item/:id", dentro de matchRoute().
  */
+import renderActiveLink from "../components/NavBar.js";
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export default class Router {
   constructor(routes, rootElement) {
     this.routes = routes;
@@ -23,6 +26,17 @@ export default class Router {
   navigate(path) {
     window.history.pushState({}, "", path);
     this.render();
+  }
+
+   getSkeletonHTML() {
+    return `
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-title"></div>
+        <div class="skeleton skeleton-line"></div>
+        <div class="skeleton skeleton-line"></div>
+        <div class="skeleton skeleton-line short"></div>
+      </div>
+    `;
   }
 
   /**
@@ -72,6 +86,11 @@ export default class Router {
     const path = window.location.pathname;
     const match = this.matchRoute(path);
 
+    this.root.innerHTML = this.getSkeletonHTML();
+    renderActiveLink(path);
+    await delay(800);
+
+
     if (!match) {
       const { default: NotFoundView } = await import(
         "../views/NotFoundView.js"
@@ -79,6 +98,7 @@ export default class Router {
       this.root.innerHTML = NotFoundView();
       return;
     }
+    
 
     const html = await match.route.view(match.params);
     this.root.innerHTML = html;

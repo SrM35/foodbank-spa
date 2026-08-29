@@ -3,24 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- TODO: cambia este título por el de tu tema -->
-  <title>Mi inventario - Ejercicio</title>
+  <title>Demo SPA - Módulos ES6 + History API</title>
+  
+  <!-- Carga prioritaria de los estilos del Shell -->
+  <link rel="stylesheet" href="styles/shell.css" />
+  <!-- Estilos del contenido dinámico -->
   <link rel="stylesheet" href="styles/main.css" />
 </head>
 <body>
+  
+  <!-- App Shell: Header y Navegación Fijos -->
   <header>
-    <!-- TODO: cambia el nombre por el de tu app -->
-    <h1>Mi inventario</h1>
+    <h1>Food bank</h1>
     <nav>
       <a href="/" data-link>Inicio</a>
       <a href="/acerca" data-link>Acerca de</a>
+      <a href="/contacto" data-link>Contacto</a>
+      <a href="/ruta-inexistente" data-link>Ruta inválida (demo 404)</a>
     </nav>
   </header>
 
-  <main id="app">Cargando...</main>
+  <!-- App Shell Container: Inyección de Vistas -->
+  <main id="app">
+    <!-- Skeleton inicial: Se muestra mientras la primera vista resuelve sus recursos -->
+    <div class="skeleton-card">
+      <div class="skeleton skeleton-title"></div>
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line"></div>
+      <div class="skeleton skeleton-line short"></div>
+    </div>
+  </main>
 
+  <!-- App Shell: Footer Fijo -->
   <footer>
-    <p>Ejercicio: completa la ruta dinámica /item/:id</p>
+    <p>La URL cambia, pero el documento nunca se recarga. Observa la pestaña Network.</p>
   </footer>
 
   <script type="module" src="src/main.js"></script>

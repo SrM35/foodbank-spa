@@ -1,0 +1,216 @@
+/* ==========================================================
+   APP SHELL - MOBILE FIRST
+   ========================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  color: #1e2761;
+  background: #f7f8fb;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ---------- HEADER ---------- */
+
+header {
+  background: #1e2761;
+  color: white;
+  padding: 1rem;
+}
+
+header h1 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1.5rem;
+}
+
+
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+nav a {
+  color: #cadcfc;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+nav a:hover,
+nav a.active {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+/* ---------- CONTENIDO ---------- */
+
+main#app {
+  padding: 1rem;
+  width: 100%;
+  flex: 1;
+  min-height: 50vh;
+}
+
+/* ---------- TARJETAS ---------- */
+
+.card {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.08);
+  margin-bottom: 1rem;
+}
+
+.card a {
+  color: #004b24;
+  font-weight: 600;
+}
+
+/* ==========================================================
+   GRID - MOBILE
+   1 columna
+   ========================================================== */
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+/* ---------- FOOTER ---------- */
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  color: #6b7280;
+  font-size: 0.85rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+
+/* ==========================================================
+   TABLET
+   ========================================================== */
+
+@media (min-width: 48rem) {
+
+  header {
+    padding: 1rem 2rem;
+  }
+
+  header h1 {
+    font-size: 1.75rem;
+  }
+
+  /* Navegación horizontal */
+  nav {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  main#app {
+    padding: 2rem;
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+
+  /* GRID: 2 columnas */
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .card {
+    padding: 1.25rem;
+  }
+}
+
+
+/* ==========================================================
+   DESKTOP
+   ========================================================== */
+
+@media (min-width: 64rem) {
+
+  header {
+    padding: 1.25rem 3rem;
+  }
+
+  header h1 {
+    font-size: 2rem;
+  }
+
+  main#app {
+    max-width: 70rem;
+    padding: 2.5rem;
+  }
+
+  /* GRID: 3 columnas */
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+}
+
+
+/* ==========================================================
+   SKELETON LOADER
+   ========================================================== */
+
+.skeleton-card {
+  background: white;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.08);
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #e2e8f0 25%,
+    #f1f5f9 50%,
+    #e2e8f0 75%
+  );
+
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 0.25rem;
+}
+
+.skeleton-title {
+  height: 1.75rem;
+  width: 40%;
+  margin-bottom: 1.2rem;
+}
+
+.skeleton-line {
+  height: 1rem;
+  width: 100%;
+  margin-bottom: 0.75rem;
+}
+
+.skeleton-line.short {
+  width: 60%;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+
+}

@@ -16,7 +16,9 @@
 // TODO: una vez que funcione, ajusta qué campos mostrar y cómo
 // se llaman en pantalla, según tu tema.
 
+// Dinamico: vista renderizada por el Router dentro de la raiz de shell (#app).
 export default async function ItemDetailView(params) {
+
   const { default: ItemsService } = await import(
     "../services/itemsService.js"
   );
@@ -26,7 +28,7 @@ export default async function ItemDetailView(params) {
 
   if (!item) {
     return `
-      <div class="card">
+      <div class="card item-detail">
         <h2>Elemento no encontrado</h2>
         <p>No existe ningún elemento con el id ${params.id}.</p>
       </div>
@@ -34,10 +36,23 @@ export default async function ItemDetailView(params) {
   }
 
   return `
-    <div class="card">
+    <div class="card item-detail">
       <h2>${item.title}</h2>
-      <p>${item.description}</p>
-      <p>${item.meta}</p>
+
+      <div class="item-detail-content">
+        <div>
+          <h3>Descripción</h3>
+          <p>${item.description}</p>
+        </div>
+
+        <div>
+          <h3>Información</h3>
+          <p>${item.meta}</p>
+        </div>
+      </div>
+
+      <a href="/" data-link>← Volver a alimentos</a>
     </div>
   `;
 }
+

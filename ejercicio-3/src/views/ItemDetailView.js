@@ -16,6 +16,7 @@
 // TODO: una vez que funcione, ajusta qué campos mostrar y cómo
 // se llaman en pantalla, según tu tema.
 
+// Dinamico: vista renderizada por el Router dentro de la raiz de shell (#app).
 export default async function ItemDetailView(params) {
   const { default: ItemsService } = await import(
     "../services/itemsService.js"

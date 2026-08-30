@@ -86,12 +86,15 @@ export default class Router {
     const path = window.location.pathname;
     const match = this.matchRoute(path);
 
+    // Dinamico: el skeleton es un estado de carga temporal,
+    // que se muestra dentro del contenedor raíz del shell.
     this.root.innerHTML = this.getSkeletonHTML();
     renderActiveLink(path);
     await delay(800);
 
 
     if (!match) {
+      //Dinamico: vista de error, se muestra en la raiz shell.
       const { default: NotFoundView } = await import(
         "../views/NotFoundView.js"
       );
@@ -99,7 +102,7 @@ export default class Router {
       return;
     }
     
-
+    // Dinamico: el Router reemplaza el interior de la raíz del shell
     const html = await match.route.view(match.params);
     this.root.innerHTML = html;
     document.title = `Mi inventario — ${path}`;

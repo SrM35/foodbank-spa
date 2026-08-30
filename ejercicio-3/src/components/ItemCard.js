@@ -3,6 +3,9 @@ import { slugify } from "../utils/slugify.js";
 // Recibe un objeto "item" y devuelve el HTML de su tarjeta en el listado.
 // TODO: ajusta qué campos mostrar según tu tema, si lo deseas
 // (por ejemplo, mostrar "meta" como "Duración:", "Precio:", etc.)
+
+// Dinamico: subcomponente usado por HomeView; genera cada
+// tarjeta individual dentro del listado.
 export default function ItemCard(item) {
   // TODO (Ejercicio - Parte A, punto 3): usa slugify(item.title) para
   // llenar el atributo data-slug de abajo (actualmente queda sin procesar).

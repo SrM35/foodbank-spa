@@ -1,56 +1,40 @@
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: system-ui, sans-serif;
-  margin: 0;
-  color: #1F2937;
-  background: #F3F4F6;
-}
-
-header {
-  background: #108a11;
-  color: #FFFFFF;
-  padding: 1rem 2rem;
-}
-
-nav a {
-  color: #FFFFFF;
-  margin-right: 1.2rem;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-main#app {
-  padding: 2rem;
-  max-width: 800px;
-  margin: 0 auto;
-  min-height: 50vh;
-}
-
-footer {
-  text-align: center;
-  padding: 1rem;
-  color: #6b7280;
-  font-size: 0.85rem;
-}
-
 .card {
-  background: white;
-  border-radius: 10px;
-  padding: 1.25rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.08);
   margin-bottom: 1rem;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
+.card a {
+  color: #004b24;
+  font-weight: 600;
 }
 
-.card a {
-  color: #004B24;
-  font-weight: 600;
+.card a:hover {
+  text-decoration: underline;
+}
+
+.card h2,
+.card h3 {
+  margin-top: 0;
+  color: #1F2937;
+}
+
+.card p {
+  line-height: 1.5;
+  color: #374151;
+}
+
+/* Responsividad de las tarjetas en pantallas medianas/grandes */
+@media (min-width: 48rem) {
+  .card {
+    padding: 1.25rem;
+  }
+}
+
+@media (min-width: 64rem) {
+  .card {
+    padding: 1.5rem;
+  }
 }

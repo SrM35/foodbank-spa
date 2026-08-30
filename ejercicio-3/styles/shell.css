@@ -9,8 +9,8 @@
 body {
   font-family: system-ui, sans-serif;
   margin: 0;
-  color: #1e2761;
-  background: #f7f8fb;
+  color: #1F2937;
+  background: #F3F4F6;
   display: flex;
   flex-direction: column;
   min-height: 100vh;
@@ -19,8 +19,8 @@ body {
 /* ---------- HEADER ---------- */
 
 header {
-  background: #1e2761;
-  color: white;
+  background: #108a11;
+  color: #FFFFFF;
   padding: 1rem;
 }
 
@@ -29,7 +29,6 @@ header h1 {
   font-size: 1.5rem;
 }
 
-
 nav {
   display: flex;
   flex-direction: column;
@@ -37,7 +36,7 @@ nav {
 }
 
 nav a {
-  color: #cadcfc;
+  color: #ffffff;
   text-decoration: none;
   font-weight: 600;
 }
@@ -55,21 +54,6 @@ main#app {
   width: 100%;
   flex: 1;
   min-height: 50vh;
-}
-
-/* ---------- TARJETAS ---------- */
-
-.card {
-  background: white;
-  border-radius: 0.75rem;
-  padding: 1rem;
-  box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.08);
-  margin-bottom: 1rem;
-}
-
-.card a {
-  color: #004b24;
-  font-weight: 600;
 }
 
 /* ==========================================================
@@ -126,10 +110,6 @@ footer {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
   }
-
-  .card {
-    padding: 1.25rem;
-  }
 }
 
 
@@ -157,10 +137,6 @@ footer {
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
-
-  .card {
-    padding: 1.5rem;
-  }
 }
 
 
@@ -176,12 +152,10 @@ footer {
 }
 
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    #e2e8f0 25%,
-    #f1f5f9 50%,
-    #e2e8f0 75%
-  );
+  background: linear-gradient(90deg,
+      #e2e8f0 25%,
+      #f1f5f9 50%,
+      #e2e8f0 75%);
 
   background-size: 200% 100%;
   animation: skeleton-loading 1.5s infinite;

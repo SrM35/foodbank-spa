@@ -1,3 +1,5 @@
+
+// Dinamico: vista renderizada por el Router dentro de la raiz de shell (#app).
 export default function NotFoundView() {
   return `
     <div class="card">

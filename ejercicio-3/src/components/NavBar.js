@@ -3,6 +3,10 @@
 // pero la idea de "una función = una pieza de UI reutilizable" es la misma
 // que en React.
 
+// Shell: solo actualiza el estado visual 
+// de los enlaces del nav que ya estan en el
+// index.html
+
 export default function renderActiveLink(path) {
   document.querySelectorAll("nav a[data-link]").forEach((link) => {
     const linkPath = new URL(link.href).pathname;

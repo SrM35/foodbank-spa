@@ -95,7 +95,7 @@ export default class Router {
 
   renderActiveLink(path);
 
-  await delay(800);
+  // await delay(800);
 
   if (!match) {
     const { default: NotFoundView } = await import(

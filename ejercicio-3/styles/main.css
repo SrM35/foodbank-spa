@@ -38,3 +38,12 @@
     padding: 1.5rem;
   }
 }
+
+.item-image {
+  width: 100%;
+  max-width: 180px;
+  height: 180px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto 1rem;
+}

@@ -11,12 +11,21 @@ export default function ItemCard(item) {
   // llenar el atributo data-slug de abajo (actualmente queda sin procesar).
   const slug = slugify(item.title);
 
-  return `
+   return `
     <article class="card" data-slug="${slug}">
+      <img 
+        src="${item.image}" 
+        alt="${item.title}"
+        class="item-image"
+      >
+
       <h3>${item.title}</h3>
       <p>${item.description}</p>
       <p><small>${item.meta}</small></p>
-      <a href="/item/${item.id}" data-link>Ver detalle →</a>
+
+      <a href="/item/${item.id}" data-link>
+        Ver detalle →
+      </a>
     </article>
   `;
 }

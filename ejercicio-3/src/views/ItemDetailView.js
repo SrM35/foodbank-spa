@@ -18,19 +18,20 @@
 
 // Dinamico: vista renderizada por el Router dentro de la raiz de shell (#app).
 export default async function ItemDetailView(params) {
-
+try{
   const { default: ItemsService } = await import(
     "../services/itemsService.js"
   );
 
   const service = new ItemsService();
+
   const item = await service.getById(params.id);
 
   if (!item) {
     return `
       <div class="card item-detail">
-        <h2>Elemento no encontrado</h2>
-        <p>No existe ningún elemento con el id ${params.id}.</p>
+        <h2>Alimento no encontrado</h2>
+        <p>No existe ningún alimento con el id ${params.id}.</p>
       </div>
     `;
   }
@@ -39,14 +40,20 @@ export default async function ItemDetailView(params) {
     <div class="card item-detail">
       <h2>${item.title}</h2>
 
+      <img 
+        src="${item.image}" 
+        alt="${item.title}"
+        class="item-detail-image"
+      >
+
       <div class="item-detail-content">
         <div>
-          <h3>Descripción</h3>
+          <h3>Marca</h3>
           <p>${item.description}</p>
         </div>
 
         <div>
-          <h3>Información</h3>
+          <h3>Categoría</h3>
           <p>${item.meta}</p>
         </div>
       </div>
@@ -54,4 +61,11 @@ export default async function ItemDetailView(params) {
       <a href="/" data-link>← Volver a alimentos</a>
     </div>
   `;
-}
+}catch (error){
+  return `
+    <div class="card error">
+      <h2>Error al cargar el alimento</h2>
+      <p>No se pudo obtener el producto. Intenta nuevamente.</p>
+    </div>
+  `;
+}}

@@ -19,4 +19,34 @@ export default class ApiService {
       meta: item.categories ? item.categories.split(",")[0] : "Alimentos",
     }));
   }
+   async getById(id) {
+    const response = await fetch(
+      `https://world.openfoodfacts.org/api/v2/product/${id}.json`
+    );
+
+    if (!response.ok) {
+      throw new Error("No se pudo obtener el producto");
+    }
+
+    const data = await response.json();
+
+    if (data.status !== 1 || !data.product) {
+      return null;
+    }
+
+    const item = data.product;
+
+    return {
+      id: item.code,
+      title: item.product_name || "Producto sin nombre",
+      description: item.brands || "Marca no especificada",
+      image:
+        item.image_front_small_url ||
+        "https://via.placeholder.com/150",
+      meta: item.categories
+        ? item.categories.split(",")[0]
+        : "Alimentos",
+    };
+  }
+
 }

@@ -7,9 +7,11 @@
 // de los enlaces del nav que ya estan en el
 // index.html
 
+import { BASE_PATH } from "../config.js";
+
 export default function renderActiveLink(path) {
   document.querySelectorAll("nav a[data-link]").forEach((link) => {
-    const linkPath = new URL(link.href).pathname;
+    const linkPath = new URL(link.href).pathname.replace(BASE_PATH, "") || "/";
     link.classList.toggle("active", linkPath === path);
   });
 }

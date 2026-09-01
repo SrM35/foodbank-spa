@@ -2,6 +2,7 @@ import Router from "./router/router.js";
 import HomeView from "./views/HomeView.js";
 import AboutView from "./views/AboutView.js";
 import ItemDetailView from "./views/ItemDetailView.js";
+import ContactView from "./views/ContactView.js";
 
 // La ruta "/item/:id" ya está registrada aquí, pero el Router todavía
 // no sabe hacer match con rutas dinámicas (ver TODO en router.js).

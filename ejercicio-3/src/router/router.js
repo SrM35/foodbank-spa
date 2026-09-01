@@ -6,6 +6,9 @@
  * parámetros, como "/item/:id", dentro de matchRoute().
  */
 import renderActiveLink from "../components/NavBar.js";
+import { BASE_PATH } from "../config.js";
+
+
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default class Router {
@@ -82,33 +85,33 @@ export default class Router {
     return null;
   }
 
-  async render() {
-    const path = window.location.pathname;
-    const match = this.matchRoute(path);
+ async render() {
+  const fullPath = window.location.pathname;
+  const path = fullPath.replace(BASE_PATH, "") || "/";
 
-    // Dinamico: el skeleton es un estado de carga temporal,
-    // que se muestra dentro del contenedor raíz del shell.
-    this.root.innerHTML = this.getSkeletonHTML();
-    renderActiveLink(path);
-    await delay(800);
+  const match = this.matchRoute(path);
 
+  this.root.innerHTML = this.getSkeletonHTML();
 
-    if (!match) {
-      //Dinamico: vista de error, se muestra en la raiz shell.
-      const { default: NotFoundView } = await import(
-        "../views/NotFoundView.js"
-      );
-      this.root.innerHTML = NotFoundView();
-      return;
-    }
-    
-    // Dinamico: el Router reemplaza el interior de la raíz del shell
-    const html = await match.route.view(match.params);
-    this.root.innerHTML = html;
-    document.title = `Mi inventario — ${path}`;
+  renderActiveLink(path);
+
+  await delay(800);
+
+  if (!match) {
+    const { default: NotFoundView } = await import(
+      "../views/NotFoundView.js"
+    );
+
+    this.root.innerHTML = NotFoundView();
+    return;
   }
 
-  init() {
-    this.render();
-  }
+  const html = await match.route.view(match.params);
+
+  this.root.innerHTML = html;
+
+  document.title = `Mi inventario — ${
+    path === "/" ? "Inicio" : path.slice(1)
+  }`;
+}
 }

@@ -1,28 +1,46 @@
-import ItemsService from "../services/itemsService.js";
+import ApiService from "../services/apiService.js";
 import ItemCard from "../components/ItemCard.js";
 
-// TODO: si renombraste "item" a algo de tu tema, ajusta también
-// el título de esta vista.
-
-// Dinamico: vista renderizada por el Router dentro de la raiz de shell (#app).
 export default async function HomeView() {
-  try{
-  
-  const service = new ItemsService();
-  const items = await service.getAll();
-  
+
+  const api = new ApiService();
+
+  let items = [];
+  let error = null;
+
+  try {
+    items = await api.getProducts("alimentos");
+  } catch (e) {
+
+    console.error(e);
+
+    if (e.name === "AbortError") {
+      error = "La solicitud tardó demasiado. Intenta nuevamente.";
+    } 
+    else if (e instanceof TypeError) {
+      error = "No se pudo conectar con el servidor. Verifica tu conexión.";
+    } 
+    else if (e.status) {
+      error = `El servidor respondió con un error (${e.status}). Intenta más tarde.`;
+    } 
+    else {
+      error = "No pudimos cargar los alimentos. Intenta de nuevo más tarde.";
+    }
+  }
+
+  const contenido = error
+    ? `<p style="color:#b91c1c">${error}</p>`
+    : `
+        <div class="grid">
+          ${items.map((item) => ItemCard(item)).join("")}
+        </div>
+      `;
+
   return `
-    <h2>Alimentos disponibles</h2>
-    <div class="grid">
-      ${items.map((item) => ItemCard(item)).join("")}
+    <div class="card">
+      <h2>Alimentos disponibles</h2>
+      ${contenido}
     </div>
   `;
-}catch (error) {
-    return `
-      <div class="card error">
-        <h2>Error al cargar los alimentos</h2>
-        <p>No se pudieron obtener los productos. Intenta nuevamente.</p>
-      </div>
-    `;
-  }
 }
+

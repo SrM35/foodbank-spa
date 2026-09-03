@@ -1,7 +1,7 @@
 export const BASE_URL = "https://es.openfoodfacts.org/cgi/search.pl";
 
 const TIMEOUT_MS = 4000;
-const MAX_RETRIES = 5;
+const MAX_RETRIES = 1;
 
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -25,8 +25,11 @@ export default class ApiService {
   `${BASE_URL}?search_terms=${searchTerm}&search_simple=1&action=process&json=1&page_size=6`
    );
 
-    if (!response.ok)
-      throw new Error("No se pudo obtener la información de los productos");
+    if (!response.ok) {
+        const httpError = new Error("Error en el servidor");
+        httpError.status = response.status;
+        throw httpError;
+      }
 
     const data = await response.json();
 
@@ -39,7 +42,8 @@ export default class ApiService {
     }));
   } catch(error) {
       const isNetworkError = error instanceof TypeError;
-      if (isNetworkError && retries > 0) {
+      const isTimeout = error.name === "AbortError";
+      if ((isNetworkError || isTimeout) && retries > 0) {
       console.log(`Reintentando... intento restante: ${retries}`);
       await delay(1000);
       return this.getProducts(searchTerm, retries - 1);
@@ -47,14 +51,17 @@ export default class ApiService {
       throw error;
     }
   }
-   async getById(id) {
-    const response = await fetch(
+   async getById(id, retries = MAX_RETRIES) {
+    try {
+    const response = await fetchWithTimeout(
       `https://world.openfoodfacts.org/api/v2/product/${id}.json`
     );
 
     if (!response.ok) {
-      throw new Error("No se pudo obtener el producto");
-    }
+        const httpError = new Error("No se pudo obtener el producto");
+        httpError.status = response.status;
+        throw httpError;
+      }
 
     const data = await response.json();
 
@@ -75,5 +82,17 @@ export default class ApiService {
         ? item.categories.split(",")[0]
         : "Alimentos",
     };
+  } catch (error) {
+      const isNetworkError = error instanceof TypeError;
+      const isTimeout = error.name === "AbortError";
+
+      if ((isNetworkError || isTimeout) && retries > 0) {
+        console.log(`Reintentando getById... Intentos restantes: ${retries}`);
+        await delay(1000);
+        return this.getById(id, retries - 1);
+      }
+
+      throw error;
+    }
   }
 }

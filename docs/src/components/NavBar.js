@@ -3,7 +3,7 @@
 // pero la idea de "una función = una pieza de UI reutilizable" es la misma
 // que en React.
 
-// Shell: solo actualiza el estado visual 
+// Shell: solo actualiza el estado visual
 // de los enlaces del nav que ya estan en el
 // index.html
 
@@ -14,4 +14,20 @@ export default function renderActiveLink(path) {
     const linkPath = new URL(link.href).pathname.replace(BASE_PATH, "") || "/";
     link.classList.toggle("active", linkPath === path);
   });
+
+  const sidebar = document.getElementById("sidebar");
+  if (sidebar) {
+    sidebar.classList.remove("open");
+  }
+}
+
+export function setupMobileMenu() {
+  const menuBtn = document.getElementById("menu-btn");
+  const sidebar = document.getElementById("sidebar");
+
+  if (menuBtn && sidebar) {
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+    });
+  }
 }

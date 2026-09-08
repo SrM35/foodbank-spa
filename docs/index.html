@@ -1,44 +1,61 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Food bank</title>
-  
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
   <!-- Carga prioritaria de los estilos del Shell -->
   <link rel="stylesheet" href="styles/shell.css" />
   <!-- Estilos del contenido dinámico -->
   <link rel="stylesheet" href="styles/main.css" />
 </head>
+
 <body>
-  
+
   <!-- App Shell: Header y Navegación Fijos -->
-  <header>
-    <h1>Food bank</h1>
-    <nav>
-      <a href="/" data-link>Inicio</a>
-      <a href="/acerca" data-link>Acerca de</a>
-      <a href="/contacto" data-link>Contacto</a>
-      <a href="/ruta-inexistente" data-link>Ruta inválida (demo 404)</a>
-    </nav>
+  <header class="mobile-header">
+    <button id="menu-btn" class="menu-btn">☰</button>
+    <h1 class="mobile-title">Foodbank</h1>
   </header>
 
-  <!-- App Shell Container: Inyección de Vistas -->
-  <main id="app">
-    <!-- Skeleton inicial: Se muestra mientras la primera vista resuelve sus recursos -->
-    <div class="skeleton-card">
-      <div class="skeleton skeleton-title"></div>
-      <div class="skeleton skeleton-line"></div>
-      <div class="skeleton skeleton-line"></div>
-      <div class="skeleton skeleton-line short"></div>
-    </div>
-  </main>
-
+  <div class="layout-container">
+    <aside class="sidebar" id="sidebar">
+      <div class="tittle">
+        <h1>Food bank</h1>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="/" data-link>Inicio</a></li>
+          <li><a href="/acerca" data-link>Acerca de</a></li>
+          <li><a href="/contacto" data-link>Contacto</a></li>
+          <li><a href="/ruta-inexistente" data-link>Ruta inválida (demo 404)</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <!-- App Shell Container: Inyección de Vistas -->
+    <main id="app">
+      <!-- Skeleton inicial: Se muestra mientras la primera vista resuelve sus recursos -->
+      <div class="skeleton-card">
+        <div class="skeleton skeleton-title"></div>
+        <div class="skeleton skeleton-line"></div>
+        <div class="skeleton skeleton-line"></div>
+        <div class="skeleton skeleton-line short"></div>
+      </div>
+    </main>
+  </div>
   <!-- App Shell: Footer Fijo -->
   <footer>
     <p>La URL cambia, pero el documento nunca se recarga. Observa la pestaña Network.</p>
   </footer>
-
   <script type="module" src="src/main.js"></script>
 </body>
+
 </html>

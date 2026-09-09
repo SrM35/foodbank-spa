@@ -29,5 +29,13 @@ export function setupMobileMenu() {
     menuBtn.addEventListener("click", () => {
       sidebar.classList.toggle("open");
     });
+    document.addEventListener("click", (event) => {
+      const clickedOutside =
+        !sidebar.contains(event.target) && !menuBtn.contains(event.target);
+
+      if (sidebar.classList.contains("open") && clickedOutside) {
+        sidebar.classList.remove("open");
+      }
+    });
   }
 }

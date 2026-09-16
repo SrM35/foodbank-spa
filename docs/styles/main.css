@@ -37,6 +37,16 @@
   color: #374151;
 }
 
+button.btn-secundario {
+  background-color: #424442;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin-top: auto;
+  align-self: flex-start;
+}
 /* Responsividad de las tarjetas en pantallas medianas/grandes */
 @media (min-width: 48rem) {
   .card {

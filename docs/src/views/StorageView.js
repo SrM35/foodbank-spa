@@ -1,6 +1,7 @@
 import { refreshThemeButton } from "../theme.js";
 
 const LOCAL_KEY = "theme";
+const SESSION_KEY = "lastSearch";
 
 function getLocalValue() {
   try {
@@ -11,13 +12,29 @@ function getLocalValue() {
   }
 }
 
+//sessionStorage
+function getSessionValue() {
+  try {
+    return sessionStorage.getItem(SESSION_KEY);
+  } catch (error) {
+    console.error("No se pudo obtener sessionStorage:", error);
+    return null;
+  }
+}
+
 function updateScreenValue() {
   const value = getLocalValue();
+  const sessionValue = getSessionValue();
 
   const element = document.getElementById("local-value");
+  const sessionElement = document.getElementById("session-value");
 
   if (element) {
     element.textContent = value ?? "(vacío)";
+  }
+
+  if (sessionElement) {
+    sessionElement.textContent = sessionValue ?? "(vacío)";
   }
 }
 
@@ -40,19 +57,26 @@ document.addEventListener("click", (event) => {
 
       // Actualizar el valor mostrado
       updateScreenValue();
-
     } catch (error) {
       console.error("No se pudo eliminar el dato:", error);
+    }
+  }
+  if (action === "delete-session") {
+    try {
+      sessionStorage.removeItem(SESSION_KEY);
+      updateScreenValue();
+    } catch (error) {
+      console.error("No se pudo eliminar el dato de sessionStorage:", error);
     }
   }
 });
 
 export default function StorageView() {
   const value = getLocalValue();
+  const sessionValue = getSessionValue();
 
   return `
-    <div class="card">
-      <h2>Diagnóstico de almacenamiento</h2>
+      <h2 class="page-title">Diagnóstico de almacenamiento</h2>
 
       <p>
         Esta sección permite consultar y limpiar la preferencia
@@ -79,6 +103,18 @@ export default function StorageView() {
           Limpiar localStorage
         </button>
       </div>
-    </div>
+      <div class="storage-card">
+        <h3>sessionStorage</h3>
+        <p>
+          Valor actual:
+          <strong id="session-value">${sessionValue ?? "(vacío)"}</strong>
+        </p>
+        <button
+          data-storage-action="delete-session"
+          class="btn-secundario"
+        >
+          Limpiar sessionStorage
+        </button>
+      </div>
   `;
 }

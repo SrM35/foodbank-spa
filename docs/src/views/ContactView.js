@@ -1,6 +1,5 @@
 export default async function ContactView() {
-
-  const {default: ApiService } = await import("../services/apiService.js");
+  const { default: ApiService } = await import("../services/apiService.js");
   const api = new ApiService();
 
   let posts = [];
@@ -8,7 +7,7 @@ export default async function ContactView() {
 
   try {
     posts = await api.getPosts();
-  } catch(e) {
+  } catch (e) {
     console.log(e);
     error = e.message;
   }
@@ -18,8 +17,8 @@ export default async function ContactView() {
     : `<ul>${posts.map((p) => `<li>${p.title}</li>`).join("")}</ul>`;
 
   return `
-    <div class="card">
-      <h2>Contacto</h2>
+  <h2 class="page-title">Contacto</h2>
+  <div class="card">
       <p>Puedes escribirnos a contacto@demo-spa.com</p>
       ${listado}
     </div>

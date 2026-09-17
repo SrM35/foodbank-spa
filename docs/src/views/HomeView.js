@@ -6,9 +6,20 @@ export default async function HomeView() {
 
   let items = [];
   let error = null;
+  let ultimaBusqueda = "alimentos";
 
   try {
-    items = await api.getProducts("alimentos");
+    ultimaBusqueda = sessionStorage.getItem("lastSearch") || "alimentos";
+  } catch (e) {
+    console.warn(
+      "No se pudo leer sessionStorage (modo privado o bloqueado):",
+      e,
+    );
+  }
+
+  try {
+    items = await api.getProducts(ultimaBusqueda);
+    sessionStorage.setItem("lastSearch", ultimaBusqueda);
   } catch (e) {
     console.error(e);
 

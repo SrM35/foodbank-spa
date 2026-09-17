@@ -58,7 +58,7 @@ try{
         </div>
       </div>
 
-      <a href="/" data-link>← Volver a alimentos</a>
+      <a href="/" data-link class="btn-link">← Volver a alimentos</a>
     </div>
   `;
 }catch (error){

@@ -102,6 +102,7 @@ nav {
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  flex-grow: 1;
 }
 
 nav ul {
@@ -179,6 +180,7 @@ footer {
   .layout-container {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     min-height: 100vh;
   }
 
@@ -186,12 +188,13 @@ footer {
   .sidebar.open {
     display: flex !important;
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    overflow-y: hidden;
     width: 260px;
     flex-shrink: 0;
     border-right: 1px solid #E5E7EB;
-    position: static;
-    height: auto;
     box-shadow: none;
     max-width: none;
   }
@@ -213,9 +216,10 @@ footer {
 
   main#app {
     flex: 1;
+    margin-left: 260px;
     padding: 2rem;
-    max-width: 60rem;
-    margin: 0 auto;
+    max-width: calc(100% - 260px);
+    min-height: 100vh;
   }
 
   /* GRID: 2 columnas */
@@ -265,12 +269,10 @@ footer {
 }
 
 .skeleton {
-  background: linear-gradient(
-    90deg,
-    #e2e8f0 25%,
-    #f1f5f9 50%,
-    #e2e8f0 75%
-  );
+  background: linear-gradient(90deg,
+      #e2e8f0 25%,
+      #f1f5f9 50%,
+      #e2e8f0 75%);
   background-size: 200% 100%;
   animation: skeleton-loading 1.5s infinite;
   border-radius: 0.25rem;
@@ -345,22 +347,6 @@ footer {
 }
 
 /* ==========================================================
-   TEMA
-   ========================================================== */
-
-.theme-container {
-  padding: 20px;
-}
-
-.theme-btn {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-/* ==========================================================
    DARK MODE
    ========================================================== */
 
@@ -399,7 +385,7 @@ body.dark-theme .sidebar a {
   color: #f3f4f6;
 }
 
-body.dark-theme .sidebar a:hover {
+body.dark-theme .sidebar a:not(.active):hover {
   background-color: #374151;
 }
 
@@ -411,7 +397,7 @@ body.dark-theme nav a.active {
 /* ---------- TÍTULO SIDEBAR ---------- */
 
 body.dark-theme .tittle h1 {
-  color: #86efac;
+  color: #f3f4f6;
 }
 
 /* ---------- CONTENIDO ---------- */
@@ -439,12 +425,10 @@ body.dark-theme .skeleton-card {
 }
 
 body.dark-theme .skeleton {
-  background: linear-gradient(
-    90deg,
-    #374151 25%,
-    #4b5563 50%,
-    #374151 75%
-  );
+  background: linear-gradient(90deg,
+      #374151 25%,
+      #4b5563 50%,
+      #374151 75%);
 }
 
 /* ==========================================================
@@ -453,6 +437,7 @@ body.dark-theme .skeleton {
 
 .theme-container {
   padding: 20px;
+  margin-top: auto;
 }
 
 .theme-btn {
@@ -602,6 +587,7 @@ body.dark-theme button.btn-secundario {
 body.dark-theme button.btn-secundario:hover {
   background-color: #6b7280;
 }
+
 .storage-card {
   background-color: #f9fafb;
   border: 1px solid #e5e7eb;

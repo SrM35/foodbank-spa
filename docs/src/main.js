@@ -21,6 +21,7 @@ const routes = [
   { path: "/", view: HomeView },
   { path: "/acerca", view: AboutView },
   { path: "/item/:id", view: ItemDetailView },
+  { path: "/contacto", view: ContactView },
   { path: "/storage", view: StorageView },
 ];
 

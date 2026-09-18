@@ -19,10 +19,15 @@ const VISITS_KEY = "visitCount";
 const VISITS_EXPIRATION_DAYS = 30;
  
 function trackVisit() {
-  const current = getCookie(VISITS_KEY);
-  const count = current ? parseInt(current, 10) + 1 : 1;
-  setCookie(VISITS_KEY, count, VISITS_EXPIRATION_DAYS);
-  return count;
+  try {
+    const current = getCookie(VISITS_KEY);
+    const count = current ? parseInt(current, 10) + 1 : 1;
+    setCookie(VISITS_KEY, count, VISITS_EXPIRATION_DAYS);
+    return count;
+  } catch (error) {
+    console.warn("No se pudo registrar la cookie de visitas:", error);
+    return null;
+  }
 }
  
 trackVisit();

@@ -8,7 +8,6 @@
 import renderActiveLink from "../components/NavBar.js";
 import { BASE_PATH } from "../config.js";
 
-
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default class Router {
@@ -31,7 +30,7 @@ export default class Router {
     this.render();
   }
 
-   getSkeletonHTML() {
+  getSkeletonHTML() {
     return `
       <div class="skeleton-card">
         <div class="skeleton skeleton-title"></div>
@@ -85,33 +84,36 @@ export default class Router {
     return null;
   }
 
- async render() {
-  const fullPath = window.location.pathname;
-  const path = fullPath.replace(BASE_PATH, "") || "/";
+  async render() {
+    const fullPath = window.location.pathname;
+    const path = fullPath.replace(BASE_PATH, "") || "/";
 
-  const match = this.matchRoute(path);
+    const match = this.matchRoute(path);
 
-  this.root.innerHTML = this.getSkeletonHTML();
+    this.root.innerHTML = this.getSkeletonHTML();
 
-  renderActiveLink(path);
+    renderActiveLink(path);
 
-  // await delay(800);
+    // await delay(800);
 
-  if (!match) {
-    const { default: NotFoundView } = await import(
-      "../views/NotFoundView.js"
-    );
+    if (!match) {
+      const { default: NotFoundView } =
+        await import("../views/NotFoundView.js");
 
-    this.root.innerHTML = NotFoundView();
-    return;
+      this.root.innerHTML = NotFoundView();
+      return;
+    }
+
+    const html = await match.route.view(match.params);
+
+    this.root.innerHTML = html;
+
+    document.title = `Mi inventario — ${
+      path === "/" ? "Inicio" : path.slice(1)
+    }`;
   }
 
-  const html = await match.route.view(match.params);
-
-  this.root.innerHTML = html;
-
-  document.title = `Mi inventario — ${
-    path === "/" ? "Inicio" : path.slice(1)
-  }`;
-}
+  init() {
+    this.render();
+  }
 }

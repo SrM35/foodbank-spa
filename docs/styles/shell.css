@@ -52,6 +52,7 @@ body {
   display: flex;
   flex-direction: column;
   position: fixed;
+  overflow-y: auto;
   top: 0;
   left: 0;
   width: 85%;
@@ -191,7 +192,7 @@ footer {
     height: 100vh;
     position: fixed;
     top: 0;
-    overflow-y: hidden;
+    overflow-y: auto;
     width: 260px;
     flex-shrink: 0;
     border-right: 1px solid #E5E7EB;

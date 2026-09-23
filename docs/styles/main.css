@@ -21,9 +21,27 @@
   align-self: flex-start;
 }
 
+.btn-delete {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #b91c1c;
+  box-shadow: 0 4px 8px rgba(185, 28, 28, 0.3);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin-top: auto;
+  align-self: flex-start;
+}
+
 .btn-link:hover {
   background-color: #0D6E0E;
   box-shadow: 0 6px 8px rgba(13, 110, 14, 0.35);
+}
+
+.btn-delete:hover {
+  background-color: #871515;
+  box-shadow: 0 6px 8px rgba(134, 20, 20, 0.35);
 }
 
 .card h2,

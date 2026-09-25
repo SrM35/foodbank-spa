@@ -6,7 +6,7 @@ export const SW_SCOPE = `${BASE_PATH}/`;
 
 export async function registerServiceWorker() {
 
-  if(!"serviceWorker" in navigator) {
+  if(!("serviceWorker" in navigator)) {
     console.warn("[PWA] Este navegador no tiene soporte para service workers.")
     return;
   }

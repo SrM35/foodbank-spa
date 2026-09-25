@@ -9,6 +9,7 @@ import StorageView from "./views/StorageView.js";
 import { setCookie, getCookie } from "./services/cookieService.js";
 import IndexedDBView from "./views/IndexedDBView.js";
 import ServiceWorkerView from "./views/ServiceWorkerView.js";
+import { registerServiceWorker } from "./pwa/registerSW.js";
 
 
 // La ruta "/item/:id" ya está registrada aquí, pero el Router todavía
@@ -53,3 +54,7 @@ const app = document.getElementById("app");
 const router = new Router(routes, app);
 
 router.init();
+
+window.addEventListener("load", () => {
+  registerServiceWorker();
+});

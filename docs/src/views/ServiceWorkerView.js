@@ -13,7 +13,7 @@ const SCOPE_TEST_PATHS = [
 ];
 
 async function getStatus() {
-  if(!"serviceWorker" in navigator) {
+  if(!("serviceWorker" in navigator)) {
     return { supported: false };
   }
 

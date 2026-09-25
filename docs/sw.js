@@ -1,5 +1,5 @@
 console.log("[SW] Script en ejecución");
-console.log("[SW] Contexto global");
+console.log("[SW] Contexto global", self.constructor.name);
 console.log("[SW] typeof Window => ", typeof window);
 console.log("[SW] typeof document => ", typeof document);
 console.log("[SW] typeof localStorage => ", typeof localStorage);

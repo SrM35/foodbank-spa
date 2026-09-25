@@ -8,6 +8,8 @@ import { loadTheme, setupTheme } from "./theme.js";
 import StorageView from "./views/StorageView.js";
 import { setCookie, getCookie } from "./services/cookieService.js";
 import IndexedDBView from "./views/IndexedDBView.js";
+import ServiceWorkerView from "./views/ServiceWorkerView.js";
+
 
 // La ruta "/item/:id" ya está registrada aquí, pero el Router todavía
 // no sabe hacer match con rutas dinámicas (ver TODO en router.js).
@@ -44,6 +46,7 @@ const routes = [
   { path: "/contacto", view: ContactView },
   { path: "/storage", view: StorageView },
   { path: "/favoritos", view: IndexedDBView },
+  { path: "/service-worker", view: ServiceWorkerView },
 ];
 
 const app = document.getElementById("app");

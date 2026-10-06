@@ -10,6 +10,7 @@ import { setCookie, getCookie } from "./services/cookieService.js";
 import IndexedDBView from "./views/IndexedDBView.js";
 import ServiceWorkerView from "./views/ServiceWorkerView.js";
 import { registerServiceWorker } from "./pwa/registerSW.js";
+import FetchLabView from "./views/FetchLabView.js";
 
 
 // La ruta "/item/:id" ya está registrada aquí, pero el Router todavía
@@ -48,6 +49,7 @@ const routes = [
   { path: "/storage", view: StorageView },
   { path: "/favoritos", view: IndexedDBView },
   { path: "/service-worker", view: ServiceWorkerView },
+  { path: "/fetch-lab", view: FetchLabView },
 ];
 
 const app = document.getElementById("app");

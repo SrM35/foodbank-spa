@@ -7,7 +7,7 @@ export const SW_SCOPE = `${BASE_PATH}/`;
 export async function registerServiceWorker() {
 
   if(!("serviceWorker" in navigator)) {
-    console.warn("[PWA] Este navegador no tiene soporte para service workers.")
+    console.warn("Este navegador no tiene soporte para service workers.")
     return;
   }
 
@@ -25,7 +25,7 @@ export async function registerServiceWorker() {
 
       newWorker.addEventListener("statechange", () => {
         if(newWorker.state === "installed" && navigator.serviceWorker.controller) {
-          notifyUpdateAvailable(registration)
+          notifyUpdateAvailable(registration);
         }
       })
     })
@@ -38,9 +38,10 @@ export async function registerServiceWorker() {
       window.location.reload();
     })
 
+    console.log("[PWA] SW registrado. Scope: ", registration.scope);
     return registration;
   } catch (error) {
-    console.log("[PWA] Falló el registro del SW", error);
+    console.error("[PWA] Falló el registro del SW: ", error);
     return null;
   }
 
@@ -48,7 +49,7 @@ export async function registerServiceWorker() {
 
 function notifyUpdateAvailable(registration) {
   window.dispatchEvent(
-    new CustomEvent("sw-update-available", { detail: {registration}})
+    new CustomEvent("sw-update-available", { detail: { registration }})
   )
 }
 

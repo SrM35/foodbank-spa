@@ -60,7 +60,8 @@ document.addEventListener("click", (event) => {
 
   if (!button) return;
 
-  const action = button.dataset.storageAction;
+  const action = boton.dataset.storageAction; // "save" | "delete"
+  const type = boton.dataset.storageType; //"cookie"  | "session" | "local"
 
   if (action === "delete-local") {
     try {

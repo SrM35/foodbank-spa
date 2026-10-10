@@ -86,9 +86,8 @@ export default class ApiService {
       const isNetworkError = error instanceof TypeError;
       const isTimeout = error.name === "AbortError";
 
-      if ((isNetworkError || isTimeout) && retries > 0) {
-        console.log(`Reintentando getById... Intentos restantes: ${retries}`);
-        await delay(1000);
+        if(retries > 0 && isNetworkError) {
+        await delay(600);
         return this.getById(id, retries - 1);
       }
 

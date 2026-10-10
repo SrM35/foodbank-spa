@@ -11,7 +11,7 @@ import IndexedDBView from "./views/IndexedDBView.js";
 import ServiceWorkerView from "./views/ServiceWorkerView.js";
 import { registerServiceWorker } from "./pwa/registerSW.js";
 import FetchLabView from "./views/FetchLabView.js";
-
+import { initConnectionStatus } from "./pwa/connectionStatus.js";
 
 // La ruta "/item/:id" ya está registrada aquí, pero el Router todavía
 // no sabe hacer match con rutas dinámicas (ver TODO en router.js).
@@ -56,6 +56,8 @@ const app = document.getElementById("app");
 const router = new Router(routes, app);
 
 router.init();
+
+initConnectionStatus();
 
 window.addEventListener("load", () => {
   registerServiceWorker();

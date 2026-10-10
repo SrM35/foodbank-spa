@@ -8,7 +8,7 @@ const dbPromise = openDB(DB_NAME, DB_VERSION, {
   upgrade(db) {
     if (!db.objectStoreNames.contains(STORE_NAME)) {
       const store = db.createObjectStore(STORE_NAME, {
-        keyPath: "id",
+        keyPath: 'id',
         autoIncrement: true
       });
 

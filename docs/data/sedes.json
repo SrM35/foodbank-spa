@@ -1,0 +1,5 @@
+[
+  { "id": 1, "nombre": "Centro de acopio principal", "horario": "Lun a Vie 9:00 - 15:00", "telefono": "612 320 5600" },
+  { "id": 2, "nombre": "Punto de entrega Norte", "horario": "Mar y Jue 10:00 - 14:00", "telefono": "612 320 5601" },
+  { "id": 3, "nombre": "Punto de entrega Sur", "horario": "Sáb 9:00 - 13:00", "telefono": "612 320 5602" }
+]

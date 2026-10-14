@@ -1,13 +1,13 @@
 {
   "name": "FoodBank BCS",
   "short_name": "FoodBank",
-  "id": "/foodbank-spa/",
-  "start_url": "/foodbank-spa/",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "description": "FoodBank BCS permite consultar la disponibilidad de productos y novedades del banco de alimentos.",
   "lang": "es-MX",
   "dir": "ltr",
-  "scope": "/foodbank-spa/",
   "categories": [
     "food",
     "productivity"

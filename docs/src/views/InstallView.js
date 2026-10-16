@@ -10,7 +10,6 @@ import {
 const yes = (text) => `<span class="sw-ok">${text}</span>`;
 const no = (text) => `<span class="sw-no">${text}</span>`;
 
-// Valores de "display" con los que Chromium considera la app instalable.
 const INSTALLABLE_DISPLAYS = [
   "standalone",
   "fullscreen",
@@ -32,14 +31,12 @@ async function readManifest() {
   }
 }
 
-// Chromium exige un ícono de 192×192 y otro de 512×512 declarados en "sizes".
 function hasIcon(manifest, size) {
   return (manifest?.icons ?? []).some((icon) =>
     (icon.sizes ?? "").split(" ").includes(`${size}x${size}`),
   );
 }
 
-// Cada criterio es un par [descripción, ¿se cumple?]
 async function evaluateCriteria() {
   const manifest = await readManifest();
   const registration =
@@ -89,7 +86,6 @@ function renderCriteria(criteria) {
   `;
 }
 
-// Estado dinámico: lo que NO se puede saber leyendo el manifest
 function renderStatus() {
   const ready = canPromptInstall();
   const rows = [
@@ -136,7 +132,6 @@ function renderLog() {
   `;
 }
 
-// Refrescar los paneles sin volver a renderizar toda la vista
 async function updatePanels() {
   const criteriaBox = document.getElementById("install-criteria");
   const statusBox = document.getElementById("install-status");
@@ -148,7 +143,6 @@ async function updatePanels() {
   logBox.innerHTML = renderLog();
 }
 
-// Cuando installPrompt.js avisa de un cambio, repintamos (si la vista está abierta)
 window.addEventListener("install-state-changed", updatePanels);
 
 document.addEventListener("click", async (event) => {

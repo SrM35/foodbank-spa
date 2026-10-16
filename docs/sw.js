@@ -14,7 +14,7 @@ console.log("[SW] typeof caches => ", typeof caches);
 //Scope del service worker
 console.log("[SW] Scope => ", self.registration.scope);
 
-const CACHE_VERSION = "app-shell-v6";
+const CACHE_VERSION = "app-shell-7";
 
 const API_ORIGIN = "https://jsonplaceholder.typicode.com";
 const CDN_ORIGIN = "https://cdn.jsdelivr.net";
@@ -29,10 +29,14 @@ const APP_SHELL = [
   "./src/main.js",
   "./src/config.js",
   "./src/router/router.js",
+  "./src/theme.js",
   "./src/components/NavBar.js",
   "./src/components/ItemCard.js",
   "./src/pwa/registerSW.js",
   "./src/pwa/connectionStatus.js",
+  "./src/pwa/installPrompt.js",
+  "./src/pwa/installButton.js",
+  "./src/views/InstallView.js",
   "./src/views/HomeView.js",
   "./src/views/AboutView.js",
   "./src/views/ContactView.js",

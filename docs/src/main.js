@@ -12,6 +12,9 @@ import ServiceWorkerView from "./views/ServiceWorkerView.js";
 import { registerServiceWorker } from "./pwa/registerSW.js";
 import FetchLabView from "./views/FetchLabView.js";
 import { initConnectionStatus } from "./pwa/connectionStatus.js";
+import { initInstallPrompt } from "./pwa/installPrompt.js";
+import { initInstallButton } from "./pwa/installButton.js";
+import InstallView from "./views/InstallView.js";
 
 // La ruta "/item/:id" ya está registrada aquí, pero el Router todavía
 // no sabe hacer match con rutas dinámicas (ver TODO en router.js).
@@ -50,14 +53,17 @@ const routes = [
   { path: "/favoritos", view: IndexedDBView },
   { path: "/service-worker", view: ServiceWorkerView },
   { path: "/fetch-lab", view: FetchLabView },
+  { path: "/instalacion", view: InstallView },
 ];
 
 const app = document.getElementById("app");
 const router = new Router(routes, app);
 
+initInstallPrompt();
 router.init();
 
 initConnectionStatus();
+initInstallButton();
 
 window.addEventListener("load", () => {
   registerServiceWorker();

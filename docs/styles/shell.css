@@ -610,6 +610,14 @@ body.dark-theme button.btn-secundario:hover {
   background-color: #6b7280;
 }
 
+body.dark-theme .install-btn {
+  color: #F3F4F6;
+}
+
+body.dark-theme .install-btn:hover {
+  background: #39414e;
+}
+
 .storage-card {
   background-color: #f9fafb;
   border: 1px solid #e5e7eb;
@@ -646,4 +654,30 @@ body.dark-theme button.btn-secundario:hover {
   color: #991b1b;
   background: rgba(239, 68, 68, 0.12);
   border-color: rgba(239, 68, 68, 0.3);
+}
+
+.install-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 2rem;
+  padding: 16px;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: #111C2D;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.install-btn:hover { 
+  background: #DEE8FF;
+  transition: background-color 0.3s ease;
+}
+
+.install-btn[hidden] { 
+  display: none; 
 }

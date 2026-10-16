@@ -21,6 +21,7 @@ body {
 .mobile-header {
   background: #ffffff;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   color: #108a11;
   padding: 1rem;
@@ -29,6 +30,15 @@ body {
 .mobile-header h1 {
   margin: 0;
   font-size: 1.25rem;
+}
+
+.mobile-header .install-btn {
+  flex-basis: 100%;
+  justify-content: center;
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px solid #108a11;
+  color: #108a11;
 }
 
 .menu-btn {

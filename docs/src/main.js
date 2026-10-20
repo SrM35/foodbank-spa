@@ -15,6 +15,7 @@ import { initConnectionStatus } from "./pwa/connectionStatus.js";
 import { initInstallPrompt } from "./pwa/installPrompt.js";
 import { initInstallButton } from "./pwa/installButton.js";
 import InstallView from "./views/InstallView.js";
+import DonationView from "./views/DonationView.js";
 
 // La ruta "/item/:id" ya está registrada aquí, pero el Router todavía
 // no sabe hacer match con rutas dinámicas (ver TODO en router.js).
@@ -53,10 +54,11 @@ const routes = [
   { path: "/favoritos", view: IndexedDBView },
   { path: "/service-worker", view: ServiceWorkerView },
   { path: "/fetch-lab", view: FetchLabView },
+  { path: "/donacion", view: DonationView },
   { path: "/instalacion", view: InstallView },
 ];
 
-const app = document.getElementById("app");
+const app = document.getElementById("app-view");
 const router = new Router(routes, app);
 
 initInstallPrompt();

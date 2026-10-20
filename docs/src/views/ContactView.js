@@ -8,26 +8,28 @@ export default async function ContactView() {
   try {
     posts = await api.getPosts();
   } catch (e) {
-     console.error("Error al obtener los posts: ", e);
-     error = "No pudimos cargar la información en este momento. Intenta de nuevo más tarde.";
+    console.error("Error al obtener los posts: ", e);
+    error =
+      "No pudimos cargar la información en este momento. Intenta de nuevo más tarde.";
   }
 
   const listado = error
     ? `<p style=color:#b91c1c">${error}</p>`
     : `<ul>${posts.map((p) => `<li>${p.title}</li>`).join("")}</ul>`;
 
-    window.probarPostDemo = async function () {
+  window.probarPostDemo = async function () {
     const status = document.getElementById("post-demo-status");
-    status.textContent = "Enviando POST... revisa la pestaña Network (verás OPTIONS y luego POST).";
+    status.textContent =
+      "Enviando POST... revisa la pestaña Network (verás OPTIONS y luego POST).";
     try {
       const response = await fetch("https://api.github.com/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-Header-Inventado": "algo",
-      },
-      body: JSON.stringify({ mensaje: "hola" }),
-    });
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-Header-Inventado": "algo",
+        },
+        body: JSON.stringify({ mensaje: "hola" }),
+      });
       const data = await response.json();
       status.textContent = `POST exitoso. El servidor simulado respondió con id: ${data.id}`;
     } catch (e) {
@@ -37,8 +39,8 @@ export default async function ContactView() {
   };
 
   return `
-    <div class="card">
-      <h2>Contacto</h2>
+  <h2 class="page-title">Contacto</h2>
+  <div class="card">
       <p>Puedes escribirnos a contacto@demo-spa.com</p>
       ${listado}
     </div>

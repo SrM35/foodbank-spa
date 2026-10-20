@@ -16,6 +16,7 @@ import { initInstallPrompt } from "./pwa/installPrompt.js";
 import { initInstallButton } from "./pwa/installButton.js";
 import InstallView from "./views/InstallView.js";
 import DonationView from "./views/DonationView.js";
+import { setupDonationSync } from "./services/donationSync.js";
 
 // La ruta "/item/:id" ya está registrada aquí, pero el Router todavía
 // no sabe hacer match con rutas dinámicas (ver TODO en router.js).
@@ -45,6 +46,7 @@ loadTheme();
 setupTheme();
 setupMobileMenu();
 
+
 const routes = [
   { path: "/", view: HomeView },
   { path: "/acerca", view: AboutView },
@@ -63,6 +65,7 @@ const router = new Router(routes, app);
 
 initInstallPrompt();
 router.init();
+setupDonationSync();
 
 initConnectionStatus();
 initInstallButton();

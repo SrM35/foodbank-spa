@@ -14,7 +14,7 @@ console.log("[SW] typeof caches => ", typeof caches);
 //Scope del service worker
 console.log("[SW] Scope => ", self.registration.scope);
 
-const CACHE_VERSION = "app-shell-7";
+const CACHE_VERSION = "app-shell-9";
 
 const API_ORIGIN = "https://jsonplaceholder.typicode.com";
 const CDN_ORIGIN = "https://cdn.jsdelivr.net";
@@ -51,16 +51,15 @@ const APP_SHELL = [
   "./src/services/dbServices.js",
   "./src/services/itemsService.js",
   "./src/utils/slugify.js",
-  // "./src/utils/index.js",
-  // "./src/utils/formatDate.js",
   "./data/productos.json",
   "./data/novedades.json",
   "./manifest.json",
   "./icons/manifest-icon-192.maskable.png",
   "./icons/manifest-icon-512.maskable.png",
   "./icons/apple-icon-180.png",
-  // "./icons/favicon-48.png",
   `${CDN_ORIGIN}/npm/idb@8/+esm`,
+  "./src/views/DonationView.js",
+  "./src/services/donationSync.js",
 ];
 
 self.addEventListener("install", (event) => {
@@ -244,3 +243,98 @@ function reportFetch(request, source, strategy) {
     );
   });
 }
+
+
+const DONATION_SYNC_TAG = "foodbank-sync-donations";
+const DONATION_API_URL = "https://jsonplaceholder.typicode.com/posts";
+const DONATION_LOCK_NAME = "foodbank-donation-sync";
+
+function openDonationDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open("foodbank_spa_db", 2);
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+
+    // No creamos almacenes aquí: la app debe actualizar la DB primero.
+    request.onupgradeneeded = () => {
+      request.transaction.abort();
+      reject(new Error("La base de datos debe actualizarse desde la aplicación."));
+    };
+  });
+}
+
+async function readOutbox() {
+  const db = await openDonationDB();
+
+  try {
+    return await new Promise((resolve, reject) => {
+      const tx = db.transaction("outbox", "readonly");
+      const request = tx.objectStore("outbox").getAll();
+
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+      tx.onabort = () => reject(tx.error);
+    });
+  } finally {
+    db.close();
+  }
+}
+
+async function removeOutboxItem(id) {
+  const db = await openDonationDB();
+
+  try {
+    await new Promise((resolve, reject) => {
+      const tx = db.transaction("outbox", "readwrite");
+      tx.objectStore("outbox").delete(id);
+
+      tx.oncomplete = resolve;
+      tx.onerror = () => reject(tx.error);
+      tx.onabort = () => reject(tx.error);
+    });
+  } finally {
+    db.close();
+  }
+}
+
+async function sendOutboxItems() {
+  // Se lee dentro del candado: lo que ya envió la página no se repite.
+  const items = await readOutbox();
+
+  for (const item of items) {
+    if (item.type !== "donation") continue;
+
+    const response = await fetch(DONATION_API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(item.payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error al enviar donación ${item.id}: HTTP ${response.status}`);
+    }
+
+    // Solo borrar después de recibir una respuesta HTTP exitosa.
+    await removeOutboxItem(item.id);
+  }
+}
+
+async function syncDonationOutbox() {
+  // Si algo falla, el error se propaga y waitUntil se rechaza:
+  // así el navegador sabe que debe reintentar el sync.
+  if (self.navigator.locks && typeof self.navigator.locks.request === "function") {
+    await self.navigator.locks.request(DONATION_LOCK_NAME, sendOutboxItems);
+  } else {
+    await sendOutboxItems();
+  }
+
+  const clients = await self.clients.matchAll({ type: "window" });
+  clients.forEach((client) => client.postMessage({ type: "DONATIONS_SYNCED" }));
+}
+
+self.addEventListener("sync", (event) => {
+  if (event.tag === DONATION_SYNC_TAG) {
+    event.waitUntil(syncDonationOutbox());
+  }
+});

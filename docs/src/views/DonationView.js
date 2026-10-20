@@ -71,6 +71,25 @@ export default async function DonationView() {
 
       <!-- Contenedor reservado para mensajes de estado -->
       <p id="mensaje-donacion" class="sw-result" style="margin-top: 1rem; font-weight: 600;"></p>
+      
+<p id="modo-sincronizacion" class="sw-result">
+  Detectando modo de sincronización...
+</p>
+
+<h3>Donaciones pendientes</h3>
+
+<ul id="donaciones-pendientes">
+  <li>Cargando donaciones pendientes...</li>
+</ul>
+
+<button
+  type="button"
+  id="reintentar-donaciones"
+  class="btn-link"
+>
+  Reintentar ahora
+</button>
+
     </div>
   `;
 }

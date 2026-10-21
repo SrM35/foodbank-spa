@@ -334,6 +334,7 @@ async function syncDonationOutbox() {
 }
 
 self.addEventListener("sync", (event) => {
+  console.log("[SW] sync =>", event.tag);
   if (event.tag === DONATION_SYNC_TAG) {
     event.waitUntil(syncDonationOutbox());
   }

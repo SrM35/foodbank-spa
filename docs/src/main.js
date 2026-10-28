@@ -18,6 +18,7 @@ import InstallView from "./views/InstallView.js";
 import DonationView from "./views/DonationView.js";
 import { setupDonationSync } from "./services/donationSync.js";
 
+
 // La ruta "/item/:id" ya está registrada aquí, pero el Router todavía
 // no sabe hacer match con rutas dinámicas (ver TODO en router.js).
 //
@@ -69,6 +70,7 @@ setupDonationSync();
 
 initConnectionStatus();
 initInstallButton();
+
 
 window.addEventListener("load", () => {
   registerServiceWorker();

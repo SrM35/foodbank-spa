@@ -1,55 +1,55 @@
+
 export default async function ContactView() {
-  const { default: ApiService } = await import("../services/apiService.js");
-  const api = new ApiService();
-
-  let posts = [];
-  let error = null;
-
-  try {
-    posts = await api.getPosts();
-  } catch (e) {
-    console.error("Error al obtener los posts: ", e);
-    error =
-      "No pudimos cargar la información en este momento. Intenta de nuevo más tarde.";
-  }
-
-  const listado = error
-    ? `<p style=color:#b91c1c">${error}</p>`
-    : `<ul>${posts.map((p) => `<li>${p.title}</li>`).join("")}</ul>`;
-
-  window.probarPostDemo = async function () {
-    const status = document.getElementById("post-demo-status");
-    status.textContent =
-      "Enviando POST... revisa la pestaña Network (verás OPTIONS y luego POST).";
-    try {
-      const response = await fetch("https://api.github.com/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Header-Inventado": "algo",
-        },
-        body: JSON.stringify({ mensaje: "hola" }),
-      });
-      const data = await response.json();
-      status.textContent = `POST exitoso. El servidor simulado respondió con id: ${data.id}`;
-    } catch (e) {
-      status.textContent = "El POST falló. Revisa la consola.";
-      console.error(e);
-    }
-  };
-
   return `
-  <h2 class="page-title">Contacto</h2>
-  <div class="card">
-      <p>Puedes escribirnos a contacto@demo-spa.com</p>
-      ${listado}
-    </div>
+    <h2 class="page-title">Contacto Food-Bank </h2>
+
     <div class="card">
-      <h3>Demo: preflight con POST</h3>
-      <p>Este botón hace un <code>POST</code> con <code>Content-Type: application/json</code>,
-      lo que obliga al navegador a mandar primero una petición <code>OPTIONS</code> (preflight).</p>
-      <button onclick="probarPostDemo()">Probar POST</button>
-      <p id="post-demo-status"></p>
+      <h3>Encuentra el centro de acopio más cercano</h3>
+
+      <p>
+        Consulta los centros de acopio cercanos para saber dónde
+        puedes llevar tus donaciones de alimentos.
+        Tu ubicación solo se solicitará cuando presiones el botón.
+      </p>
+
+      <button type="button" id="buscar-centros" class="btn-link">
+        Usar mi ubicación
+      </button>
+
+      <p id="estado-ubicacion" class="sw-result"
+         role="status" aria-live="polite"></p>
+
+      <div>
+        <label for="direccion-usuario">
+          O escribe tu dirección
+        </label>
+        <input
+          type="text"
+          id="direccion-usuario"
+          placeholder="Coordenadas (latitud y longitud)"
+        />
+        <button type="button" id="buscar-por-direccion"
+                class="btn-link">
+          Buscar por dirección
+        </button>
+      </div>
+      <p id="estado-permiso-contacto" class="sw-result">
+  Consultando permiso...
+</p>
+
+      <div id="lista-centros"></div>
+    </div>
+
+    <div class="card">
+      <h3>Contacto</h3>
+      <p>¿Tienes dudas sobre las donaciones?</p>
+      <p>
+        Correo:
+        <a href="mailto:foodbankBCS@gmail.com">
+          foodbankBCS@gmail.com
+        </a>
+      </p>
+      
     </div>
   `;
 }

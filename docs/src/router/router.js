@@ -7,6 +7,7 @@
  */
 import renderActiveLink from "../components/NavBar.js";
 import { BASE_PATH } from "../config.js";
+import { initContactLocations } from "../pwa/contactLocation.js";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -107,6 +108,10 @@ export default class Router {
     const html = await match.route.view(match.params);
 
     this.root.innerHTML = html;
+
+    if (path === "/contacto") {
+  initContactLocations();
+}
 
     document.title = `Mi inventario — ${
       path === "/" ? "Inicio" : path.slice(1)

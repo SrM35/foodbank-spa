@@ -17,14 +17,50 @@ function paint() {
 
   const permission = getPermission();
 
+  el.hidden = false;
+
+  if (permission === "denied") {
+    el.disabled = true;
+    el.title = "Notificaciones bloqueadas";
+    el.setAttribute("aria-label", el.title);
+
+    el.innerHTML =
+      '<span class="material-symbols-rounded">notifications_off</span>';
+
+    let message = document.getElementById("notification-message");
+
+    if (!message) {
+      message = document.createElement("div");
+      message.id = "notification-message";
+      message.className = "notification-warning";
+
+      message.innerHTML = `
+        <span class="material-symbols-rounded">info</span>
+        <div>
+          <strong>Notificaciones bloqueadas</strong>
+          <p>
+            Para recibir avisos, permite las notificaciones
+            desde la configuración de este sitio en tu navegador
+            y recarga la página.
+          </p>
+        </div>
+      `;
+
+      document.body.appendChild(message);
+      setTimeout(() => {
+       message.remove();
+      }, 6000);
+    }
+
+    return;
+  }
+
   const labels = {
     default: "Activar notificaciones",
     granted: "Notificaciones activas",
-    denied: "Notificaciones bloqueadas",
   };
 
-  el.hidden = false;
-  el.disabled = permission !== "default";
+  el.disabled = permission === "granted";
 
   el.innerHTML = permission === "granted"
     ? '<span class="material-symbols-rounded">notifications_active</span>'
@@ -32,6 +68,8 @@ function paint() {
 
   el.title = labels[permission];
   el.setAttribute("aria-label", labels[permission]);
+
+  document.getElementById("notification-message")?.remove();
 }
 
 async function watchPermission() {

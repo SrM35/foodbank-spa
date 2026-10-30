@@ -323,7 +323,7 @@ async function sendPendingOnce() {
             "./icons/manifest-icon-192.maskable.png",
             registration.scope
           ).href,
-          tag: `donations-synced-${Date.now()}`,
+          tag: "donations-synced",
           data: { url: "./" },
         }
       );

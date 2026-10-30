@@ -750,3 +750,60 @@ body.dark-theme #notify-btn {
 body.dark-theme #notify-btn:hover {
   background: #166534;
 }
+/* ==========================================================
+   AVISO DE NOTIFICACIONES BLOQUEADAS
+   ========================================================== */
+
+.notification-warning {
+  position: fixed;
+  top: 75px;
+  right: 16px;
+  z-index: 1100;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  width: min(340px, calc(100% - 32px));
+  padding: 16px;
+
+  background: #fff7ed;
+  color: #9a3412;
+  border: 1px solid #fed7aa;
+  border-radius: 12px;
+
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+}
+
+.notification-warning .material-symbols-rounded {
+  flex-shrink: 0;
+  font-size: 22px;
+}
+
+.notification-warning strong {
+  display: block;
+  font-size: 0.9rem;
+}
+
+.notification-warning p {
+  margin: 5px 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+/* Modo oscuro */
+body.dark-theme .notification-warning {
+  background: #422006;
+  color: #fed7aa;
+  border-color: #9a3412;
+}
+
+/* Celular */
+@media (max-width: 480px) {
+  .notification-warning {
+    top: 70px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+  }
+}

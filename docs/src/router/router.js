@@ -26,10 +26,16 @@ export default class Router {
     });
   }
 
+  // navigate(path) {
+  //   window.history.pushState({}, "", path);
+  //   this.render();
+  // }
   navigate(path) {
-    window.history.pushState({}, "", path);
-    this.render();
-  }
+  const url = new URL(path, document.baseURI);
+
+  window.history.pushState({}, "", url.pathname + url.search + url.hash);
+  this.render();
+}
 
   getSkeletonHTML() {
     return `
@@ -86,8 +92,13 @@ export default class Router {
   }
 
   async render() {
+    // const fullPath = window.location.pathname;
+    // const path = fullPath.replace(BASE_PATH, "") || "/";
     const fullPath = window.location.pathname;
-    const path = fullPath.replace(BASE_PATH, "") || "/";
+
+const path = fullPath.startsWith(BASE_PATH)
+  ? fullPath.slice(BASE_PATH.length) || "/"
+  : fullPath || "/";
 
     const match = this.matchRoute(path);
 

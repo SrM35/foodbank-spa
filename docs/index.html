@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#108a11">
     <title>Food bank</title>
+
+    <script>
+      const isLocal =
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1";
+
+      const BASE_PATH = isLocal ? "/docs" : "/foodbank-spa";
+
+      document.write(`<base href="${BASE_PATH}/">`);
+    </script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
@@ -116,22 +127,22 @@
     </div>
         <nav>
           <ul>
-            <li><a href="/" data-link=""><span class="material-symbols-rounded">home</span>Inicio</a></li>
-            <li><a href="/acerca" data-link=""><span class="material-symbols-rounded">info</span>Acerca de</a></li>
-            <li><a href="/contacto" data-link=""><span class="material-symbols-rounded">mail</span>Contacto</a></li>
-            <li><a href="/ruta-inexistente" data-link=""><span class="material-symbols-rounded">error</span>Ruta inválida</a>
+            <li><a href="./" data-link=""><span class="material-symbols-rounded">home</span>Inicio</a></li>
+            <li><a href="acerca" data-link=""><span class="material-symbols-rounded">info</span>Acerca de</a></li>
+            <li><a href="contacto" data-link=""><span class="material-symbols-rounded">mail</span>Contacto</a></li>
+            <li><a href="ruta-inexistente" data-link=""><span class="material-symbols-rounded">error</span>Ruta inválida</a>
             </li>
-            <li><a href="/storage" data-link=""><span class="material-symbols-rounded">feature_search</span>Diagnóstico de
+            <li><a href="storage" data-link=""><span class="material-symbols-rounded">feature_search</span>Diagnóstico de
                 almacenamiento</a></li>
             <li>
-              <a href="/favoritos" data-link="">
+              <a href="favoritos" data-link="">
                 <span class="material-symbols-rounded">favorite</span>Favoritos
               </a>
             </li>
-            <a href="/service-worker" data-link=""><span class="material-symbols-rounded">home_repair_service</span>Service Worker</a>
-            <li><a href="/fetch-lab" data-link=""><span class="material-symbols-rounded">feature_search</span>Fetch Lab</a>
+            <li><a href="service-worker" data-link=""><span class="material-symbols-rounded">home_repair_service</span>Service Worker</a></li>
+            <li><a href="fetch-lab" data-link=""><span class="material-symbols-rounded">feature_search</span>Fetch Lab</a>
             </li>
-            <li><a href="/donacion" data-link=""><span class="material-symbols-rounded">volunteer_activism</span>Donación</a>
+            <li><a href="donacion" data-link=""><span class="material-symbols-rounded">volunteer_activism</span>Donación</a>
             </li>
           </ul>
           <button type="button" id="install-btn" class="install-btn" hidden><span class="material-symbols-rounded">download</span>Instalar app</button>

@@ -375,7 +375,7 @@ async function showDonationNotification(count) {
 
         icon: NOTIFICATION_ICON,
 
-       tag: `donations-synced-${Date.now()}`,
+       tag: "donations-synced",
 
         data: {
           url: "donacion"

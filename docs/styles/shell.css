@@ -709,3 +709,44 @@ body.dark-theme .install-btn:hover {
     height: 0;
   }
 }
+#notify-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  margin: 0 0 0 auto; /* anula el margin-bottom de .install-btn y lo manda a la derecha */
+  padding: 0;
+  border-radius: 50%;
+  background: rgba(20, 174, 20, 0.12);
+  color: #108a11;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+#notify-btn[hidden] {
+  display: none;
+}
+
+#notify-btn:hover {
+  background: rgba(20, 174, 20, 0.22);
+}
+
+#notify-btn:active {
+  transform: scale(0.92);
+}
+
+#notify-btn .material-symbols-rounded {
+  font-size: 24px;
+}
+
+/* Modo oscuro */
+body.dark-theme #notify-btn {
+  background: #14532d;
+  color: #86efac;
+}
+
+body.dark-theme #notify-btn:hover {
+  background: #166534;
+}

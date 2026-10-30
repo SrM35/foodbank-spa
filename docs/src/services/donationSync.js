@@ -15,7 +15,7 @@ const RETRY_DELAYS = [1500, 4000, 8000, 15000, 30000];
 let initialized = false;
 let retrying = false;
 let refreshTimers = [];
-let lastPendingCount = null;
+// let lastPendingCount = null;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -133,16 +133,16 @@ function showModal({ icon, title, text }) {
   button.focus();
 }
 
-function showSentModal(count) {
-  showModal({
-    icon: ":D",
-    title: count === 1 ? "¡Gracias! Tu donacion fue enviada" : "¡Donaciones enviadas!",
-    text:
-      count === 1
-        ? "Tu donacion ya llegó al banco de alimentos."
-        : `Se enviaron ${count} donaciones que estaban esperando.`,
-  });
-}
+// function showSentModal(count) {
+//   showModal({
+//     icon: ":D",
+//     title: count === 1 ? "¡Gracias! Tu donacion fue enviada" : "¡Donaciones enviadas!",
+//     text:
+//       count === 1
+//         ? "Tu donacion ya llegó al banco de alimentos."
+//         : `Se enviaron ${count} donaciones que estaban esperando.`,
+//   });
+// }
 
 function showSavedOfflineModal() {
   showModal({
@@ -185,15 +185,6 @@ async function renderPending() {
   try {
     const donations = await getPendingDonations();
 
-    // Si bajo la cantidad de pendientes, es que se enviaron.
-    if (lastPendingCount !== null && donations.length < lastPendingCount) {
-      showSentModal(lastPendingCount - donations.length);
-      if (donations.length === 0) {
-        showMessage("Todas tus donaciones fueron enviadas.");
-      }
-    }
-    lastPendingCount = donations.length;
-
     const list = document.getElementById("donaciones-pendientes");
     if (!list) return;
 
@@ -218,13 +209,20 @@ async function renderPending() {
       list.appendChild(li);
     }
   } catch (error) {
-    console.error("[Donaciones] Error al leer las donaciones guardadas:", error);
+    console.error(
+      "[Donaciones] Error al leer las donaciones guardadas:",
+      error
+    );
 
     const list = document.getElementById("donaciones-pendientes");
     if (!list) return;
+
     list.replaceChildren();
+
     const li = document.createElement("li");
-    li.textContent = "No pudimos mostrar tus donaciones pendientes. Intenta recargar la página.";
+    li.textContent =
+      "No pudimos mostrar tus donaciones pendientes. Intenta recargar la página.";
+
     list.appendChild(li);
   }
 }
@@ -282,9 +280,9 @@ async function withLock(task) {
 // Un intento de envío desde la página. Devuelve true si todo se envió.
 async function sendPendingOnce() {
   try {
-    await withLock(async () => {
-      // Se lee DENTRO del candado: lo que ya mandó el Service Worker no se repite.
+    const sentCount = await withLock(async () => {
       const items = await getPendingActions();
+      let count = 0;
 
       for (const item of items) {
         if (item.type !== "donation") continue;
@@ -299,10 +297,37 @@ async function sendPendingOnce() {
           throw new Error(`Error HTTP ${response.status}`);
         }
 
-        // Borrar solo después de que el servidor confirme.
         await deletePendingAction(item.id);
+        count++;
       }
+
+      return count;
     });
+
+    if (
+      sentCount > 0 &&
+      "serviceWorker" in navigator &&
+      "Notification" in window &&
+      Notification.permission === "granted"
+    ) {
+      const registration = await navigator.serviceWorker.ready;
+
+      await registration.showNotification(
+        "¡Donaciones sincronizadas!",
+        {
+          body:
+            sentCount === 1
+              ? "Tu donación pendiente se envió correctamente."
+              : `Se enviaron ${sentCount} donaciones pendientes.`,
+          icon: new URL(
+            "./icons/manifest-icon-192.maskable.png",
+            registration.scope
+          ).href,
+          tag: `donations-synced-${Date.now()}`,
+          data: { url: "./" },
+        }
+      );
+    }
 
     return true;
   } catch (error) {
@@ -310,7 +335,6 @@ async function sendPendingOnce() {
     return false;
   }
 }
-
 // Intenta enviar varias veces con pausas, por si la red aún no está lista.
 async function syncWithRetries() {
   if (retrying) return;

@@ -17,6 +17,7 @@ import { initInstallButton } from "./pwa/installButton.js";
 import InstallView from "./views/InstallView.js";
 import DonationView from "./views/DonationView.js";
 import { setupDonationSync } from "./services/donationSync.js";
+import { initNotificationButton } from "./pwa/notificationButton.js";
 
 
 // La ruta "/item/:id" ya está registrada aquí, pero el Router todavía
@@ -70,6 +71,7 @@ setupDonationSync();
 
 initConnectionStatus();
 initInstallButton();
+initNotificationButton();
 
 
 window.addEventListener("load", () => {

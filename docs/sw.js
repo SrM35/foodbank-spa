@@ -14,11 +14,13 @@ console.log("[SW] typeof caches => ", typeof caches);
 //Scope del service worker
 console.log("[SW] Scope => ", self.registration.scope);
 
-const CACHE_VERSION = "app-shell-10";
+const CACHE_VERSION = "app-shell-12";
 
 const API_ORIGIN = "https://jsonplaceholder.typicode.com";
 const CDN_ORIGIN = "https://cdn.jsdelivr.net";
 const ALLOWED_ORIGINS = [self.location.origin, API_ORIGIN, CDN_ORIGIN];
+
+const NOTIFICATION_ICON = new URL("./icons/manifest-icon-192.maskable.png", self.registration.scope).href;
 
 const APP_SHELL = [
   "./",
@@ -62,7 +64,9 @@ const APP_SHELL = [
   "./src/services/donationSync.js",
   "./src/pwa/contactLocation.js",
   "./src/pwa/geolocation.js",
-  "./src/pwa/share.js"
+  "./src/pwa/share.js",
+  "./src/pwa/notifications.js",
+  "./src/pwa/notificationButton.js"
 ];
 
 self.addEventListener("install", (event) => {
@@ -249,7 +253,10 @@ function reportFetch(request, source, strategy) {
 
 
 const DONATION_SYNC_TAG = "foodbank-sync-donations";
-const DONATION_API_URL = "https://jsonplaceholder.typicode.com/posts";
+
+const DONATION_API_URL =
+  "https://jsonplaceholder.typicode.com/posts";
+
 const DONATION_LOCK_NAME = "foodbank-donation-sync";
 
 function openDonationDB() {
@@ -257,12 +264,18 @@ function openDonationDB() {
     const request = indexedDB.open("foodbank_spa_db", 2);
 
     request.onsuccess = () => resolve(request.result);
+
     request.onerror = () => reject(request.error);
 
-    // No creamos almacenes aquí: la app debe actualizar la DB primero.
+    // La aplicación es responsable de actualizar la DB.
     request.onupgradeneeded = () => {
       request.transaction.abort();
-      reject(new Error("La base de datos debe actualizarse desde la aplicación."));
+
+      reject(
+        new Error(
+          "La base de datos debe actualizarse desde la aplicación."
+        )
+      );
     };
   });
 }
@@ -273,12 +286,16 @@ async function readOutbox() {
   try {
     return await new Promise((resolve, reject) => {
       const tx = db.transaction("outbox", "readonly");
+
       const request = tx.objectStore("outbox").getAll();
 
       request.onsuccess = () => resolve(request.result);
+
       request.onerror = () => reject(request.error);
+
       tx.onabort = () => reject(tx.error);
     });
+
   } finally {
     db.close();
   }
@@ -290,55 +307,165 @@ async function removeOutboxItem(id) {
   try {
     await new Promise((resolve, reject) => {
       const tx = db.transaction("outbox", "readwrite");
+
       tx.objectStore("outbox").delete(id);
 
       tx.oncomplete = resolve;
+
       tx.onerror = () => reject(tx.error);
+
       tx.onabort = () => reject(tx.error);
     });
+
   } finally {
     db.close();
   }
 }
 
+// Envía las donaciones pendientes y cuenta las exitosas.
+
 async function sendOutboxItems() {
-  // Se lee dentro del candado: lo que ya envió la página no se repite.
   const items = await readOutbox();
+
+  let sentCount = 0;
 
   for (const item of items) {
     if (item.type !== "donation") continue;
 
     const response = await fetch(DONATION_API_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(item.payload),
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify(item.payload)
     });
 
     if (!response.ok) {
-      throw new Error(`Error al enviar donación ${item.id}: HTTP ${response.status}`);
+      throw new Error("No se pudo enviar la donación.");
     }
 
-    // Solo borrar después de recibir una respuesta HTTP exitosa.
     await removeOutboxItem(item.id);
+
+    sentCount++;
+  }
+
+  return sentCount;
+}
+
+
+async function showDonationNotification(count) {
+  if (
+    Notification.permission !== "granted" ||
+    count === 0
+  ) {
+    return;
+  }
+
+  const body = count === 1
+    ? "Tu donación pendiente se sincronizó correctamente."
+    : `${count} donaciones pendientes se sincronizaron correctamente.`;
+
+  try {
+    await self.registration.showNotification(
+      "¡Donaciones sincronizadas!",
+      {
+        body,
+
+        icon: NOTIFICATION_ICON,
+
+       tag: `donations-synced-${Date.now()}`,
+
+        data: {
+          url: "donacion"
+        }
+      }
+    );
+
+    console.log("[SW] Notificación de donaciones enviada");
+
+  } catch (error) {
+    console.error("[SW] Error mostrando notificación:", error);
   }
 }
+
 
 async function syncDonationOutbox() {
-  // Si algo falla, el error se propaga y waitUntil se rechaza:
-  // así el navegador sabe que debe reintentar el sync.
-  if (self.navigator.locks && typeof self.navigator.locks.request === "function") {
-    await self.navigator.locks.request(DONATION_LOCK_NAME, sendOutboxItems);
+  let sentCount = 0;
+
+  // Evita que dos procesos sincronicen al mismo tiempo.
+  if (
+    self.navigator.locks &&
+    typeof self.navigator.locks.request === "function"
+  ) {
+    sentCount = await self.navigator.locks.request(
+      DONATION_LOCK_NAME,
+      sendOutboxItems
+    );
+
   } else {
-    await sendOutboxItems();
+    sentCount = await sendOutboxItems();
   }
 
-  const clients = await self.clients.matchAll({ type: "window" });
-  clients.forEach((client) => client.postMessage({ type: "DONATIONS_SYNCED" }));
+  // Si no se envió nada, no mostramos notificación.
+  if (sentCount === 0) {
+    console.log("[SW] No hay donaciones pendientes.");
+    return;
+  }
+
+  // Avisar a las ventanas abiertas.
+  const clients = await self.clients.matchAll({
+    type: "window"
+  });
+
+  clients.forEach((client) => {
+    client.postMessage({
+      type: "DONATIONS_SYNCED"
+    });
+  });
+
+  // Mostrar notificación después de sincronizar.
+  await showDonationNotification(sentCount);
 }
+
+
 
 self.addEventListener("sync", (event) => {
   console.log("[SW] sync =>", event.tag);
+
   if (event.tag === DONATION_SYNC_TAG) {
     event.waitUntil(syncDonationOutbox());
   }
 });
+
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+
+  const target = new URL(
+    event.notification.data?.url || "./",
+    self.registration.scope
+  ).href;
+
+  event.waitUntil(openOrFocus(target));
+});
+
+async function openOrFocus(target) {
+  const windows = await self.clients.matchAll({
+    type: "window",
+    includeUncontrolled: true
+  });
+
+  const existing = windows.find((client) =>
+    client.url.startsWith(self.registration.scope)
+  );
+
+  if (existing) {
+    await existing.navigate(target);
+    await existing.focus();
+    return;
+  }
+
+  return self.clients.openWindow(target);
+}

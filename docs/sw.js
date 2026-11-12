@@ -14,9 +14,10 @@ console.log("[SW] typeof caches => ", typeof caches);
 //Scope del service worker
 console.log("[SW] Scope => ", self.registration.scope);
 
-const CACHE_VERSION = "app-shell-12";
+const CACHE_VERSION = "app-shell-13";
 
-const API_ORIGIN = "https://jsonplaceholder.typicode.com";
+// const API_ORIGIN = "https://jsonplaceholder.typicode.com";
+const API_ORIGIN = "http://localhost:3000";
 const CDN_ORIGIN = "https://cdn.jsdelivr.net";
 const ALLOWED_ORIGINS = [self.location.origin, API_ORIGIN, CDN_ORIGIN];
 
@@ -254,8 +255,9 @@ function reportFetch(request, source, strategy) {
 
 const DONATION_SYNC_TAG = "foodbank-sync-donations";
 
-const DONATION_API_URL =
-  "https://jsonplaceholder.typicode.com/posts";
+// const DONATION_API_URL =
+//   "https://jsonplaceholder.typicode.com/posts";
+const DONATION_API_URL = `${API_ORIGIN}/api/donaciones`;
 
 const DONATION_LOCK_NAME = "foodbank-donation-sync";
 

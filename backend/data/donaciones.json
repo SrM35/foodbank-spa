@@ -1,0 +1,42 @@
+[
+  {
+    "id": "1794446694782",
+    "nombreDonante": "Javier",
+    "nombreProducto": "Arroz",
+    "categoriaProducto": "Granos y Cereales",
+    "cantidadProducto": 15,
+    "fechaRegistro": "2026-11-12T01:24:54.782Z"
+  },
+  {
+    "id": "1794446694725",
+    "nombreDonante": "Javier",
+    "nombreProducto": "Pan de muerto",
+    "categoriaProducto": "Otros",
+    "cantidadProducto": 20,
+    "fechaRegistro": "2026-11-12T01:24:54.725Z"
+  },
+  {
+    "id": "1794446575068",
+    "nombreDonante": "Javier",
+    "nombreProducto": "Pan de muerto",
+    "categoriaProducto": "Otros",
+    "cantidadProducto": 20,
+    "fechaRegistro": "2026-11-12T01:22:55.068Z"
+  },
+  {
+    "id": "1794446541436",
+    "nombreDonante": "Javier",
+    "nombreProducto": "Pan de muerto",
+    "categoriaProducto": "Otros",
+    "cantidadProducto": 52,
+    "fechaRegistro": "2026-11-12T01:22:21.436Z"
+  },
+  {
+    "id": "1794446455408",
+    "nombreDonante": "Javier",
+    "nombreProducto": "Pan de muerto",
+    "categoriaProducto": "Otros",
+    "cantidadProducto": 20,
+    "fechaRegistro": "2026-11-12T01:20:55.408Z"
+  }
+]

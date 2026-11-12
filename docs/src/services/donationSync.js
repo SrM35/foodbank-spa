@@ -1,3 +1,4 @@
+import { API_BASE_URL } from "../config.js";
 import {
   enqueueDonation,
   getPendingActions,
@@ -5,7 +6,8 @@ import {
 } from "./dbServices.js";
 
 const SYNC_TAG = "foodbank-sync-donations";
-const API_URL = "https://jsonplaceholder.typicode.com/posts";
+// const API_URL = "https://jsonplaceholder.typicode.com/posts";
+const API_URL = `${API_BASE_URL}/donaciones`;
 const LOCK_NAME = "foodbank-donation-sync";
 const FETCH_TIMEOUT_MS = 8000;
 const AUTO_RETRY_MS = 20000;

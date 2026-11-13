@@ -14,7 +14,7 @@ console.log("[SW] typeof caches => ", typeof caches);
 //Scope del service worker
 console.log("[SW] Scope => ", self.registration.scope);
 
-const CACHE_VERSION = "app-shell-14";
+const CACHE_VERSION = "app-shell-15";
 
 // const API_ORIGIN = "https://jsonplaceholder.typicode.com";
 const API_ORIGIN = "https://foodbank-spa.onrender.com/api";
@@ -256,7 +256,7 @@ const DONATION_SYNC_TAG = "foodbank-sync-donations";
 
 // const DONATION_API_URL =
 //   "https://jsonplaceholder.typicode.com/posts";
-const DONATION_API_URL = `${API_ORIGIN}/api/donaciones`;
+const DONATION_API_URL = `${API_ORIGIN}/donaciones`;
 
 const DONATION_LOCK_NAME = "foodbank-donation-sync";
 

@@ -132,13 +132,18 @@ app.post("/api/push/unsubscribe", (req, res) => {
 
 async function sendPushNotification(payload, { ttlSeconds = 3600 } = {}) {
   const body = JSON.stringify(payload);
+  const subs = allSubs.all();
+  console.log(`[Push] enviando a ${subs.length} suscripciones`);
   await Promise.allSettled(
-    allSubs.all().map(async (s) => {
+    subs.map(async (s) => {
       try {
         await webpush.sendNotification(
           { endpoint: s.endpoint, keys: { p256dh: s.p256dh, auth: s.auth } },
           body,
           { TTL: ttlSeconds },
+        );
+        console.log(
+          `[Push] ok -> ${s.nombre || s.user_id} (${new URL(s.endpoint).host})`,
         );
       } catch (err) {
         if (err.statusCode === 404 || err.statusCode === 410) {

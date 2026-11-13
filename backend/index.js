@@ -2,6 +2,7 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import * as webpush from "web-push";
+import Database from "better-sqlite3";
 import fs from "node:fs/promises";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
@@ -26,6 +27,8 @@ if (!VAPID_PUBLIC_KEY || !VAPID_PRIVATE_KEY) {
 webpush.setVapidDetails(VAPID_SUBJECT, VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY);
 
 mkdirSync(DATA_DIR, { recursive: true });
+const db = new Database(path.join(DATA_DIR, "foodbank.db"));
+db.pragma("journal_mode = WAL");
 db.exec(`
   CREATE TABLE IF NOT EXISTS push_subscriptions (
     id         INTEGER PRIMARY KEY AUTOINCREMENT,

@@ -4,6 +4,7 @@
   "type": "module",
   "description": "API REST para FoodBank BCS PWA",
   "main": "index.js",
+  "engines": { "node": "20.x" },
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js"

@@ -4,13 +4,14 @@
   "type": "module",
   "description": "API REST para FoodBank BCS PWA",
   "main": "index.js",
-  "engines": { "node": "20.x" },
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "node --watch index.js"
   },
   "dependencies": {
-    "better-sqlite3": "^13.1.1",
     "cors": "^2.8.5",
     "dotenv": "^18.0.10",
     "express": "^4.21.0",

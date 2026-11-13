@@ -14,10 +14,10 @@ console.log("[SW] typeof caches => ", typeof caches);
 //Scope del service worker
 console.log("[SW] Scope => ", self.registration.scope);
 
-const CACHE_VERSION = "app-shell-13";
+const CACHE_VERSION = "app-shell-14";
 
 // const API_ORIGIN = "https://jsonplaceholder.typicode.com";
-const API_ORIGIN = "http://localhost:3000";
+const API_ORIGIN = "https://foodbank-spa.onrender.com/api";
 const CDN_ORIGIN = "https://cdn.jsdelivr.net";
 const ALLOWED_ORIGINS = [self.location.origin, CDN_ORIGIN];
 

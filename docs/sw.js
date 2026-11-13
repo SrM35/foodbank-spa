@@ -19,7 +19,7 @@ const CACHE_VERSION = "app-shell-13";
 // const API_ORIGIN = "https://jsonplaceholder.typicode.com";
 const API_ORIGIN = "http://localhost:3000";
 const CDN_ORIGIN = "https://cdn.jsdelivr.net";
-const ALLOWED_ORIGINS = [self.location.origin, API_ORIGIN, CDN_ORIGIN];
+const ALLOWED_ORIGINS = [self.location.origin, CDN_ORIGIN];
 
 const NOTIFICATION_ICON = new URL("./icons/manifest-icon-192.maskable.png", self.registration.scope).href;
 
@@ -136,7 +136,6 @@ function pickStrategy(request) {
 
   const url = new URL(request.url);
 
-  if (url.origin === API_ORIGIN) return networkFirst;
   if (url.pathname.endsWith("/data/productos.json")) return networkFirst;
   if (url.pathname.endsWith("/data/novedades.json")) return staleWhileRevalidate;
 
@@ -471,3 +470,24 @@ async function openOrFocus(target) {
 
   return self.clients.openWindow(target);
 }
+
+self.addEventListener("push", (event) => {
+  let payload = { title: "FoodBank ", body: "Tienes una nueva actualización.", tag: "foodbank-general", url: "./" };
+
+  if (event.data) {
+    try {
+      payload = { ...payload, ...event.data.json() };
+    } catch {
+      payload.body = event.data.text();
+    }
+  }
+
+  event.waitUntil(
+    self.registration.showNotification(payload.title, {
+      body: payload.body,
+      icon: NOTIFICATION_ICON,
+      tag: payload.tag,
+      data: { url: payload.url || "./" },
+    })
+  );
+});

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1",
+    "title": "Queso",
+    "description": "Donado por Michelle",
+    "image": "https://via.placeholder.com/180?text=Alimento",
+    "meta": "Lácteos",
+    "stock": 70
+  },
+  {
+    "id": "2",
+    "title": "Pollo",
+    "description": "Donado por Jesús",
+    "image": "https://via.placeholder.com/180?text=Alimento",
+    "meta": "Otros",
+    "stock": 2
+  }
+]

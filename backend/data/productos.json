@@ -14,5 +14,29 @@
     "image": "https://via.placeholder.com/180?text=Alimento",
     "meta": "Otros",
     "stock": 2
+  },
+  {
+    "id": "3",
+    "title": "Carne",
+    "description": "Donado por Javi",
+    "image": "https://via.placeholder.com/180?text=Alimento",
+    "meta": "Enlatados",
+    "stock": 20
+  },
+  {
+    "id": "4",
+    "title": "yogurt",
+    "description": "Donado por Danna Padilla",
+    "image": "https://via.placeholder.com/180?text=Alimento",
+    "meta": "Lácteos",
+    "stock": 50
+  },
+  {
+    "id": "5",
+    "title": "leche",
+    "description": "Donado por daniux",
+    "image": "https://via.placeholder.com/180?text=Alimento",
+    "meta": "Lácteos",
+    "stock": 30
   }
 ]

@@ -1,5 +1,37 @@
 [
   {
+    "id": "1794592628216",
+    "nombreDonante": "daniux",
+    "nombreProducto": "leche",
+    "categoriaProducto": "Lácteos",
+    "cantidadProducto": 30,
+    "fechaRegistro": "2026-11-13T17:57:08.216Z"
+  },
+  {
+    "id": "1794592315676",
+    "nombreDonante": "Danna Padilla",
+    "nombreProducto": "yogurt",
+    "categoriaProducto": "Lácteos",
+    "cantidadProducto": 50,
+    "fechaRegistro": "2026-11-13T17:51:55.676Z"
+  },
+  {
+    "id": "1794592245767",
+    "nombreDonante": "Javi",
+    "nombreProducto": "Carne",
+    "categoriaProducto": "Granos y Cereales",
+    "cantidadProducto": 10,
+    "fechaRegistro": "2026-11-13T17:50:45.767Z"
+  },
+  {
+    "id": "1794592226421",
+    "nombreDonante": "Javi",
+    "nombreProducto": "Carne",
+    "categoriaProducto": "Enlatados",
+    "cantidadProducto": 10,
+    "fechaRegistro": "2026-11-13T17:50:26.422Z"
+  },
+  {
     "id": "1794579712618",
     "nombreDonante": "Juansito",
     "nombreProducto": "Queso",

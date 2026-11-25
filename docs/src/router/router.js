@@ -91,43 +91,41 @@ export default class Router {
     return null;
   }
 
-  async render() {
-    // const fullPath = window.location.pathname;
-    // const path = fullPath.replace(BASE_PATH, "") || "/";
-    const fullPath = window.location.pathname;
+async render() {
+  const fullPath = window.location.pathname;
 
-const path = fullPath.startsWith(BASE_PATH)
-  ? fullPath.slice(BASE_PATH.length) || "/"
-  : fullPath || "/";
+  const path = fullPath.startsWith(BASE_PATH)
+    ? fullPath.slice(BASE_PATH.length) || "/"
+    : fullPath || "/";
 
-    const match = this.matchRoute(path);
+  const match = this.matchRoute(path);
 
-    this.root.innerHTML = this.getSkeletonHTML();
+  this.root.innerHTML = this.getSkeletonHTML();
 
-    renderActiveLink(path);
+  renderActiveLink(path);
 
-    // await delay(800);
+  if (!match) {
+    const { default: NotFoundView } =
+      await import("../views/NotFoundView.js");
 
-    if (!match) {
-      const { default: NotFoundView } =
-        await import("../views/NotFoundView.js");
-
-      this.root.innerHTML = NotFoundView();
-      return;
-    }
-
-    const html = await match.route.view(match.params);
-
-    this.root.innerHTML = html;
-
-    if (path === "/contacto") {
-  initContactLocations();
-}
-
-    document.title = `Mi inventario — ${
-      path === "/" ? "Inicio" : path.slice(1)
-    }`;
+    this.root.innerHTML = NotFoundView();
+    return;
   }
+
+  const { default: View } = await match.route.load();
+
+  const html = await View(match.params);
+
+  this.root.innerHTML = html;
+
+  if (path === "/contacto") {
+    initContactLocations();
+  }
+
+  document.title = `Mi inventario — ${
+    path === "/" ? "Inicio" : path.slice(1)
+  }`;
+}
 
   init() {
     this.render();
